@@ -1087,6 +1087,7 @@ a{color:var(--accent)}
 .rvq-age.crit{color:var(--amber);font-weight:600}
 .rvq-age.expired{color:var(--red);font-weight:600}
 .rvq-qty{color:var(--text3)}
+.rvq-adjchip{font-size:10px;font-weight:600;color:var(--amber);background:color-mix(in srgb,var(--amber) 12%,transparent);border:1px solid color-mix(in srgb,var(--amber) 30%,transparent);padding:1px 7px;border-radius:5px}
 .rvq-money{display:flex;gap:16px;padding-right:4px}
 .rvq-m{display:flex;flex-direction:column;align-items:flex-end;gap:1px}
 .rvq-m-v{font-size:13px;font-weight:650;color:var(--text2);font-variant-numeric:tabular-nums}
@@ -1457,7 +1458,7 @@ thead th{padding:7px 10px}
   <div class="sb-logo">
     <div class="sb-logo-text">
       <div class="name">SF Re-evaluation</div>
-      <div class="sub">Reimb. Tracker · <span style="color:var(--accent);font-weight:700">v16.34</span></div>
+      <div class="sub">Reimb. Tracker · <span style="color:var(--accent);font-weight:700">v16.35</span></div>
     </div>
     <button class="sb-toggle" onclick="toggleSidebar()" title="Collapse sidebar">‹</button>
   </div>
@@ -2067,17 +2068,19 @@ function normalizeAdjustments(){
   [records, archived, importErrors].forEach(list=>{
     list.forEach(r=>{
       const isAdj = r.reason==='GeneralAdjustment' || r.is_adjustment==='Yes';
-      if (isAdj && (Number(r.actual_cost)>0 || r.cog_source!=='ADJ')){
-        r.actual_cost = 0; r.cog_source='ADJ'; r.is_adjustment='Yes';
-        r.net_result = Number(r.reimb_amount)||0;
-        changed++;
+      // Adjustments now carry the REAL SKU cost (VA checks the original claim).
+      // Repair any legacy rows that were zeroed by the old logic.
+      if (isAdj){
+        r.is_adjustment='Yes';
+        const skuCog = extractCogFromSku(r.sku);
+        if ((r.cog_source==='ADJ' || Number(r.actual_cost)===0) && skuCog!==null && Number(r.actual_cost)!==skuCog){
+          r.actual_cost = skuCog; r.cog_source='ADJ_SKU';
+          r.net_result = (Number(r.reimb_amount)||0) - skuCog*(r.quantity||1);
+          changed++;
+        }
       }
     });
   });
-  // adjustments wrongly parked in the COG-fix queue → move to Review
-  for(let i=importErrors.length-1;i>=0;i--){
-    if(importErrors[i].is_adjustment==='Yes'){ const r=importErrors[i]; delete r.import_error; records.push(r); importErrors.splice(i,1); changed++; }
-  }
   return changed;
 }
 
@@ -2479,7 +2482,7 @@ function renderOverview() {
   const reviewItems = records.filter(r => ann(r.reimb_id).workflow_status==='triage' && r.is_reversal!=='Yes');
   const errCount = (importErrors||[]).filter(r=>r.is_reversal!=='Yes').length;
 
-  const atRisk = active.reduce((s,r)=>s+Math.abs(Math.min(0,computedNet(r))),0);
+  const atRisk = active.reduce((s,r)=>s+(r.is_adjustment==='Yes'?0:Math.abs(Math.min(0,computedNet(r)))),0);
   const casesOpen = active.filter(r=>vaCaseOpen(r)).length;
   const mscPending = active.filter(r=>{const m=ann(r.reimb_id).msc_status;return m==='review'||m==='pending';}).length;
   const needCheck = active.filter(r=>{const m=ann(r.reimb_id).msc_status;return (computedNet(r)<-0.01 && (!m||m==='none'));}).length;
@@ -2554,7 +2557,7 @@ function renderOverview() {
   const topLosses = [...active].filter(r=>computedNet(r)<0).sort((a,b)=>computedNet(a)-computedNet(b)).slice(0,4);
   // Reason breakdown — where the losses actually come from (active, loss-making rows)
   const reasonAgg={};
-  active.forEach(r=>{ const n=computedNet(r); if(n<-0.005){ const k=r.reason||'Other'; (reasonAgg[k]=reasonAgg[k]||{n:0,sum:0}); reasonAgg[k].n++; reasonAgg[k].sum+=(-n); } });
+  active.forEach(r=>{ if(r.is_adjustment==='Yes') return; const n=computedNet(r); if(n<-0.005){ const k=r.reason||'Other'; (reasonAgg[k]=reasonAgg[k]||{n:0,sum:0}); reasonAgg[k].n++; reasonAgg[k].sum+=(-n); } });
   const reasonRows=Object.entries(reasonAgg).sort((a,b)=>b[1].sum-a[1].sum).slice(0,5);
   const reasonMax=reasonRows.length?reasonRows[0][1].sum:0;
   const reasonList=reasonRows.length?reasonRows.map(([k,v])=>`
@@ -3117,7 +3120,7 @@ function renderTriage() {
     const lossRows = allTriage.filter(r=>computedNet(r)<-0.005);
     const prioRows = allTriage.filter(r=>computedNet(r)<-10);
     const profitRows = allTriage.filter(r=>computedNet(r)>=-0.005);
-    const sum = arr => arr.reduce((s,r)=>s+Math.abs(Math.min(0,computedNet(r))),0);
+    const sum = arr => arr.reduce((s,r)=>s+(r.is_adjustment==='Yes'?0:Math.abs(Math.min(0,computedNet(r)))),0);
     const curFilt = document.getElementById('triage-result')?.value||'';
     const cur = (curFilt==='loss'||curFilt==='b1')?'loss':(curFilt==='b2'||curFilt==='b3'||curFilt==='b4')?'loss10':(curFilt==='profit')?'profit':'';
     const segs=[
@@ -3155,7 +3158,7 @@ function renderTriage() {
       <div class="rvq-body">
         <div class="rvq-top">${tierTag}${grpBadge}<span class="rvq-name">${esc(r.product_name||'(no product name)')}</span></div>
         <div class="rvq-codes"><span class="rvq-code" onclick="event.stopPropagation();copyText('${esc(r.sku)}','SKU')">${esc(r.sku)}</span><span class="rvq-dot">·</span><span class="rvq-code dim" onclick="event.stopPropagation();copyText('${esc(r.asin||'')}','ASIN')">${esc(r.asin||'')}</span>${r.fnsku?'<span class="rvq-dot">·</span><span class="rvq-code dim" onclick="event.stopPropagation();copyText(\''+esc(r.fnsku)+'\',\'FNSKU\')">'+esc(r.fnsku)+'</span>':''}</div>
-        <div class="rvq-tags">${reasonPill(r.reason)}${ageStr}${r.quantity>1?'<span class="rvq-qty">Qty '+r.quantity+'</span>':''}</div>
+        <div class="rvq-tags">${reasonPill(r.reason)}${r.is_adjustment==='Yes'?'<span class="rvq-adjchip" title="Top-up on an earlier claim — check the original claim to see if full COG is already recovered before chasing.">check original claim</span>':''}${ageStr}${r.quantity>1?'<span class="rvq-qty">Qty '+r.quantity+'</span>':''}</div>
       </div>
       <div class="rvq-money">
         <div class="rvq-m"><span class="rvq-m-v">£${(r.actual_cost||0).toFixed(2)}</span><span class="rvq-m-l">cost</span></div>
@@ -4683,7 +4686,7 @@ function updateImportPreviewRows() {
       <td class="td-mono sku-cell"><span class="sku-full">${esc(r.sku)}</span></td>
       <td>${esc(r.reason||'')}</td>
       <td class="td-num">${r.quantity}</td>
-      <td class="td-num">${r.is_adjustment==='Yes' ? '£0.00 <span style="color:var(--text3);font-size:9.5px" title="Top-up on an earlier claim — cost was counted on the original reimbursement">adj · cost on original</span>' : (r.actual_cost&&Number(r.actual_cost)>0) ? '£'+Number(r.actual_cost).toFixed(2)+' <span style="color:var(--text3);font-size:9.5px">SKU</span>' : '<span class="cog-error">COG missing</span>'}</td>
+      <td class="td-num">${r.is_adjustment==='Yes' ? '£'+Number(r.actual_cost||0).toFixed(2)+' <span style="color:var(--amber);font-size:9.5px" title="Top-up on an earlier claim. Priced at full SKU cost so your VA can check the original claim and chase if still short.">adj · check original</span>' : (r.actual_cost&&Number(r.actual_cost)>0) ? '£'+Number(r.actual_cost).toFixed(2)+' <span style="color:var(--text3);font-size:9.5px">SKU</span>' : '<span class="cog-error">COG missing</span>'}</td>
       <td class="td-num">${(r.imported_net_result||0) < 0 ? '-£'+Math.abs(r.imported_net_result||0).toFixed(2) : '+£'+Math.abs(r.imported_net_result||0).toFixed(2)}</td>
       <td class="td-mono">${esc(r.case_id||'')}</td>
       <td class="td-mono">${esc(r.reimb_id_real||r.reimb_id||'')}</td>
@@ -4763,7 +4766,12 @@ function rowToRecord(raw, map) {
   const reasonV = String(raw[map.reason]||'').trim();
   const typeV = String(raw[map.is_reversal]||'').trim();
   const isAdj = reasonV==='GeneralAdjustment' || typeV==='Adjustment';
-  const actualCost = isAdj ? 0 : (skuCog !== null ? skuCog : 0);
+  // Adjustments are a TOP-UP on an earlier claim. We CAN'T tell from the export
+  // whether the original + this top-up already covers full COG — only the VA can,
+  // by checking the original claim. So price it at the real SKU cost (shows the
+  // true worst-case gap, puts it in front of the VA), tag it as an adjustment,
+  // and exclude it from loss STATS so headline numbers aren't distorted.
+  const actualCost = skuCog !== null ? skuCog : 0;
   const qty = parseFloat(raw[map.quantity])||1;
   const reimb = parseMoney(raw[map.reimb_amount]);
   const computedNet = reimb - ((actualCost || 0) * qty);
@@ -4776,7 +4784,7 @@ function rowToRecord(raw, map) {
     reason: raw[map.reason] || '',
     quantity: qty,
     actual_cost: actualCost || 0,
-    cog_source: isAdj ? 'ADJ' : (skuCog !== null ? 'SKU' : 'MANUAL'),
+    cog_source: isAdj ? 'ADJ_SKU' : (skuCog !== null ? 'SKU' : 'MANUAL'),
     reimb_amount: reimb,
     net_result: computedNet,
     imported_net_result: parseMoney(raw[map.net_result]),
@@ -5693,7 +5701,7 @@ const REASON_INFO = {
   'Lost_Inbound':['p-li','Lost In','Lost on the way into Amazon (inbound shipment to FBA)'],
   'CustomerReturn':['p-cr','Cust. Return','Customer return — check condition; reimbursed below cost may be claimable'],
   'ReturnAdjustment':['p-ra','Return Adj.','Adjustment applied to a previous return — judged by net like any row'],
-  'GeneralAdjustment':['p-ga','Gen. Adj. ↺','TOP-UP: extra money Amazon added to an EARLIER claim on this ASIN. Cost was counted on the original reimbursement, so this whole amount is gain — nothing to chase. See \'Claim history\' on the card for the likely original.'],
+  'GeneralAdjustment':['p-ga','Adjustment ↺','TOP-UP on an earlier claim. We show the full SKU cost so you can see the worst-case gap — but the ORIGINAL claim may already cover some of it. Check the original in Amazon/SellerFuse: if total recovered = full COG, mark no action; if still short, move to Active and chase the rest.'],
   'CustomerServiceIssue':['p-csi','CS Issue','Customer-service goodwill credit — judged by net'],
   'Damaged_Outbound':['p-do','Dam. Out','Item damaged in outbound transit'],
   'Reimbursement_Reversal':['p-rev','Reversal','Amazon reversed a previous reimbursement — kept separate from normal claims'],
