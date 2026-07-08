@@ -1094,9 +1094,9 @@ a{color:var(--accent)}
 .cog-ticket:hover{background:rgba(148,163,184,.045);border-color:var(--border2)}
 .cog-ticket-main{min-width:0}
 .cog-ticket-top{display:flex;align-items:center;gap:8px;min-width:0}
-.cog-ticket-title{font-size:12.8px;font-weight:730;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:0}
+.cog-ticket-title{font-size:13.4px;font-weight:780;color:#f0f4fa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:0}
 .cog-ticket-sub{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:3px}
-.cog-chip{font-family:var(--mono);font-size:9.8px;color:var(--code-dim);background:transparent;border:0;border-radius:0;padding:0;white-space:nowrap}
+.cog-chip{font-family:var(--mono);font-size:10px;color:#aeb9c8;background:transparent;border:0;border-radius:0;padding:0;white-space:nowrap}
 .cog-chip:hover{color:var(--text)}
 .cog-chip.linkish{color:var(--code);border-color:transparent}
 .cog-ticket-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:6px;color:var(--text2);font-size:10.8px}
@@ -1190,7 +1190,7 @@ a{color:var(--accent)}
 [data-density="compact"] .rvq-card{padding-top:5px;padding-bottom:5px}
 [data-density="compact"] .rvq-name{font-size:13px}
 [data-density="compact"] .rvq-code{font-size:11.5px}
-.rvq-card{position:relative;display:grid;grid-template-columns:22px minmax(0,1fr) auto auto;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:6px 12px 6px 14px;cursor:pointer;transition:border-color .12s,box-shadow .12s,background .12s}
+.rvq-card{position:relative;display:grid;grid-template-columns:22px minmax(0,1fr) 328px auto;align-items:center;gap:12px;background:linear-gradient(180deg,rgba(148,163,184,.035),rgba(148,163,184,.015));border:1px solid var(--border);border-radius:10px;padding:9px 12px 9px 14px;cursor:pointer;transition:border-color .12s,box-shadow .12s,background .12s}
 .rvq-card::before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:3px;border-radius:0 3px 3px 0;background:transparent}
 .rvq-card.tier-hi::before{background:var(--red)}
 .rvq-card.tier-md::before{background:var(--amber)}
@@ -1201,7 +1201,7 @@ a{color:var(--accent)}
 .rvq-check input{width:15px;height:15px;accent-color:var(--accent);cursor:pointer}
 .rvq-body{min-width:0}
 .rvq-top{display:flex;align-items:center;gap:8px;margin-bottom:2px}
-.rvq-name{font-size:14px;font-weight:600;color:var(--text);letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rvq-name{font-size:14.5px;font-weight:760;color:#f0f4fa;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rvq-tag{flex-shrink:0;font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:5px}
 .rvq-grp{flex-shrink:0;font-size:9.5px;font-weight:700;color:var(--text3);background:var(--surface3);border:1px solid var(--border2);padding:2px 7px;border-radius:5px}
 .tag-hi{background:color-mix(in srgb,var(--red) 18%,transparent);color:#ff8a92;border:1px solid color-mix(in srgb,var(--red) 40%,transparent)}
@@ -1209,22 +1209,22 @@ a{color:var(--accent)}
 .tag-ok{background:color-mix(in srgb,var(--green) 14%,transparent);color:var(--green)}
 .rvq-codes{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:2px}
 .rvq-tags{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12px}
-.rvq-code{font-family:var(--mono);font-size:12px;color:var(--code);cursor:pointer;letter-spacing:-.01em}
-.rvq-code.dim{color:var(--code-dim)}
+.rvq-code{font-family:var(--mono);font-size:11.5px;color:#b8c4d3;cursor:pointer;letter-spacing:-.01em}
+.rvq-code.dim{color:#9eabbc}
 .rvq-code:hover{color:var(--accent)}
 .rvq-dot{color:var(--border2)}
-.rvq-age{color:var(--text3)}
+.rvq-age{color:#b6c1cf}
 .rvq-age.crit{color:var(--amber);font-weight:600}
 .rvq-age.expired{color:var(--red);font-weight:600}
 .rvq-qty{color:var(--text3)}
 .rvq-adjchip{font-size:10px;font-weight:600;color:var(--amber);background:color-mix(in srgb,var(--amber) 12%,transparent);border:1px solid color-mix(in srgb,var(--amber) 30%,transparent);padding:1px 7px;border-radius:5px}
-.rvq-money{display:grid;grid-template-columns:88px 96px 96px;gap:12px;padding-right:2px}
-.rvq-m{display:flex;flex-direction:column;align-items:flex-end;gap:1px}
-.rvq-m-v{font-size:13px;font-weight:650;color:var(--text2);font-variant-numeric:tabular-nums}
+.rvq-money{display:grid;grid-template-columns:92px 102px 102px;gap:6px;padding-right:0}
+.rvq-m{display:flex;flex-direction:column;align-items:flex-end;gap:1px;background:rgba(8,13,20,.30);border:1px solid rgba(148,163,184,.12);border-radius:8px;padding:6px 8px;min-width:0}
+.rvq-m-v{font-size:13.5px;font-weight:780;color:#e4ebf5;font-variant-numeric:tabular-nums}
 .rvq-m-v.net-neg{color:#ff6b74}.rvq-m-v.net-pos{color:var(--green)}.rvq-m-v.net-flat{color:var(--text3)}
-.rvq-m-l{font-size:10.5px;color:var(--text3);text-transform:uppercase;letter-spacing:.04em}
+.rvq-m-l{font-size:9.5px;color:#aeb9c8;text-transform:uppercase;letter-spacing:.04em}
 .rvq-act{display:flex;align-items:center;gap:5px}
-.rvq-act .btn-primary{padding:7px 13px;font-size:11.5px}
+.rvq-act .btn-primary{padding:8px 13px;font-size:11.5px;border-radius:9px;box-shadow:0 8px 18px -14px var(--accent)}
 .rvq-act .btn-icon{width:30px;height:30px;font-size:15px}
 /* grouped duplicates */
 .rvq-group{border:1px solid var(--border);border-radius:10px;overflow:hidden}
@@ -1335,21 +1335,21 @@ tbody tr.row-cog-error:hover{background:linear-gradient(90deg,rgba(245,65,79,.08
 tbody tr.row-loss:hover,tbody tr.row-profit:hover,tbody tr.row-cog-error:hover{background:var(--surface2)}
 /* === Active workshop cards (Removals-style zones) === */
 .ar-list{display:flex;flex-direction:column;gap:12px;padding:8px 11px}
-.ar-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);overflow:hidden;position:relative;box-shadow:var(--shadow);transition:border-color .15s,box-shadow .15s,transform .12s}
+.ar-card{background:linear-gradient(180deg,rgba(148,163,184,.035),rgba(148,163,184,.015));border:1px solid var(--border2);border-radius:10px;overflow:hidden;position:relative;box-shadow:var(--shadow);transition:border-color .15s,box-shadow .15s,transform .12s}
 .ar-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-1px)}
 .ar-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--_rsc,var(--border2));z-index:2}
 .ar-card.rs-red{--_rsc:var(--red);border-color:rgba(224,39,58,.65);background:rgba(224,39,58,.07)} .ar-card.rs-amber{--_rsc:var(--amber);border-color:rgba(199,125,10,.65);background:rgba(199,125,10,.08)} .ar-card.rs-blue{--_rsc:#38bdf8;border-color:rgba(56,189,248,.65);background:rgba(56,189,248,.07)} .ar-card.rs-purple{--_rsc:#c084fc;border-color:rgba(192,132,252,.65);background:rgba(192,132,252,.08)} .ar-card.rs-green{--_rsc:var(--green);border-color:rgba(22,169,110,.65);background:rgba(22,169,110,.08)} .ar-card.rs-todo{--_rsc:var(--text3)}
 .ar-card.rs-red .ar-zhead{background:rgba(224,39,58,.18)} .ar-card.rs-amber .ar-zhead{background:rgba(199,125,10,.18)} .ar-card.rs-blue .ar-zhead{background:rgba(56,189,248,.16)} .ar-card.rs-purple .ar-zhead{background:rgba(192,132,252,.18)} .ar-card.rs-green .ar-zhead{background:rgba(22,169,110,.18)}
 /* zones */
-.ar-zhead{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;padding:5px 11px;background:var(--surface)}
+.ar-zhead{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;padding:8px 12px;background:rgba(8,13,20,.28)}
 .ar-zprog{padding:6px 11px;background:var(--bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .ar-zwork{display:grid;grid-template-columns:1fr 280px;gap:0;background:var(--surface)}
 @media(max-width:880px){.ar-zwork{grid-template-columns:1fr}}
 /* header */
 .ar-head{min-width:0;flex:1}
-.ar-name{font-size:12.5px;font-weight:600;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:5px}
+.ar-name{font-size:13.5px;font-weight:780;line-height:1.32;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:6px;color:#f0f4fa}
 .ar-chips{display:flex;gap:6px;flex-wrap:wrap}
-.id-chip{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;background:var(--bg);border:1px solid var(--border);border-radius:5px;padding:2px 8px;color:var(--text2);cursor:pointer;transition:all .12s;white-space:nowrap}
+.id-chip{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;background:rgba(8,13,20,.42);border:1px solid rgba(148,163,184,.16);border-radius:6px;padding:3px 8px;color:#bbc7d7;cursor:pointer;transition:all .12s;white-space:nowrap}
 .id-chip:hover{border-color:#38bdf8;color:#7dd3fc}
 .id-chip.copied{border-color:var(--green);color:var(--green);background:var(--green-dim);box-shadow:0 0 0 3px var(--green-dim)}
 .id-chip.copied::after{content:" ✓";font-weight:700}
@@ -1464,14 +1464,14 @@ tbody tr.row-loss:hover,tbody tr.row-profit:hover,tbody tr.row-cog-error:hover{b
 .ar-navlink{background:none;border:none;color:var(--text3);font-size:10.5px;cursor:pointer;padding:4px}
 .ar-navlink:hover{color:var(--text)}
 /* ── Active card v17: glance strip · compact details ── */
-.ar-glance{display:grid;grid-template-columns:1fr 1fr 1.35fr;background:var(--bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.ar-glance{display:grid;grid-template-columns:1fr 1fr 1.35fr;background:rgba(8,13,20,.34);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 @media(max-width:760px){.ar-glance{grid-template-columns:1fr}}
 .ar-gc{padding:9px 12px;border-right:1px solid var(--border);display:flex;flex-direction:column;justify-content:center;min-width:0}
 .ar-gc:last-child{border-right:none}
 @media(max-width:760px){.ar-gc{border-right:none;border-bottom:1px solid var(--border)}.ar-gc:last-child{border-bottom:none}}
-.ar-gc-lbl{font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);font-weight:700}
+.ar-gc-lbl{font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:#b4c0cf;font-weight:760}
 .ar-gc-big{font-size:16px;font-weight:800;line-height:1.05;margin-top:2px;font-variant-numeric:tabular-nums;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ar-gc-sub{font-size:9.5px;color:var(--text3);margin-top:2px;line-height:1.3}
+.ar-gc-sub{font-size:9.5px;color:#aeb9c8;margin-top:2px;line-height:1.3}
 .ar-gc-bar{position:relative;height:5px;border-radius:3px;background:var(--surface2);margin-top:9px}
 .ar-gc-barfill{height:100%;border-radius:3px;min-width:3px}
 .ar-gc-bartick{position:absolute;top:-2px;bottom:-2px;width:1px;background:var(--text3);opacity:.55}
@@ -1486,7 +1486,7 @@ tbody tr.row-loss:hover,tbody tr.row-profit:hover,tbody tr.row-cog-error:hover{b
 .ar-ladder-band{margin-top:5px;padding-top:5px;border-top:1px solid var(--border)}
 .ar-zprog{padding:8px 12px 9px;background:var(--surface);border-top:none;border-bottom:none}
 .ar-zprog .ar-prog{margin-bottom:0}
-.ar-details{display:grid;grid-template-columns:1fr 1fr;gap:0;padding:5px 12px 7px;background:var(--surface)}
+.ar-details{display:grid;grid-template-columns:1fr 1fr;gap:0;padding:8px 12px 9px;background:rgba(148,163,184,.035)}
 @media(max-width:760px){.ar-details{grid-template-columns:1fr}}
 .ar-details>.ar-dcol{min-width:0}
 .ar-details>.ar-dcol:nth-child(1){padding-right:24px}
@@ -1509,10 +1509,10 @@ tbody tr.row-loss:hover,tbody tr.row-profit:hover,tbody tr.row-cog-error:hover{b
 .ar-qa-b.qa-r{border-color:rgba(245,65,79,.5);color:var(--red)} .ar-qa-b.qa-r:hover{background:var(--red);color:#fff;border-color:transparent}
 .ar-qa-b.qa-p{border-color:rgba(192,132,252,.5);color:#c084fc} .ar-qa-b.qa-p:hover{background:#c084fc;color:#0b0614;border-color:transparent}
 /* collapsed-card summary bar */
-.ar-bar{display:flex;align-items:center;gap:16px;padding:5px 12px;background:var(--bg);border-top:1px solid var(--border);cursor:pointer;flex-wrap:wrap;min-height:30px}
+.ar-bar{display:flex;align-items:center;gap:16px;padding:7px 12px;background:rgba(8,13,20,.34);border-top:1px solid var(--border);cursor:pointer;flex-wrap:wrap;min-height:34px}
 .ar-bar:hover{background:var(--surface2)}
 .ar-b-seg{display:inline-flex;align-items:center;gap:6px;font-size:11px;white-space:nowrap;color:var(--text2)}
-.ar-b-lbl{font-size:8.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--text3)}
+.ar-b-lbl{font-size:8.5px;text-transform:uppercase;letter-spacing:.06em;color:#aeb9c8}
 .ar-b-seg b{font-variant-numeric:tabular-nums;font-weight:700}
 .ar-b-track{width:56px;height:4px;border-radius:2px;background:var(--surface2);overflow:hidden;display:inline-block}
 .ar-b-fill{display:block;height:100%;border-radius:2px}
@@ -1612,12 +1612,12 @@ thead th{padding:7px 10px}
     <button class="nav-btn" onclick="nav('actions')">
       <svg class="nb-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
       <span class="nb-label">Actions</span>
-      <span class="nb-badge hot" id="badge-actions">0</span>
+      <span class="nb-badge hot" id="badge-actions">1</span>
     </button>
     <button class="nav-btn" onclick="nav('triage')">
       <svg class="nb-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 4h18"></path><path d="M7 12h10"></path><path d="M10 20h4"></path></svg>
       <span class="nb-label">Review Queue</span>
-      <span class="nb-badge" id="badge-triage">114</span>
+      <span class="nb-badge" id="badge-triage">113</span>
     </button>
     <button class="nav-btn" onclick="nav('errors')">
       <svg class="nb-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
@@ -1627,7 +1627,7 @@ thead th{padding:7px 10px}
     <button class="nav-btn" onclick="nav('active')">
       <svg class="nb-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path></svg>
       <span class="nb-label">Active</span>
-      <span class="nb-badge" id="badge-active">0</span>
+      <span class="nb-badge" id="badge-active">1</span>
     </button>
     <button class="nav-btn" onclick="nav('history')">
       <svg class="nb-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3h6v6H3z"></path><path d="M15 3h6v6h-6z"></path><path d="M15 15h6v6h-6z"></path><path d="M3 15h6v6H3z"></path></svg>
@@ -1678,19 +1678,36 @@ thead th{padding:7px 10px}
         <div class="aq-sub">Your to-do list, top to bottom. Clear "Do Today" first — each one is money to recover.</div>
       </div>
       <div class="tb-spacer"></div>
-      <span class="aq-count" id="aq-total">0</span>
+      <span class="aq-count" id="aq-total">1</span>
     </div>
     <div class="page-body" id="aq-body"><div class="aq-summary">
-    <div class="aqs-stat"><div class="aqs-num green">0</div><div class="aqs-lbl">actions to do</div></div>
-    <div class="aqs-stat"><div class="aqs-num amber">£0</div><div class="aqs-lbl">at risk</div></div>
-    <div class="aqs-stat"><div class="aqs-num ">—</div><div class="aqs-lbl">nearest deadline</div></div>
+    <div class="aqs-stat"><div class="aqs-num ">1</div><div class="aqs-lbl">action to do</div></div>
+    <div class="aqs-stat"><div class="aqs-num amber">£295</div><div class="aqs-lbl">at risk</div></div>
+    <div class="aqs-stat"><div class="aqs-num ">52</div><div class="aqs-lbl">days to nearest deadline</div></div>
     <div class="aqs-legend">
       <span class="aqs-leg"><i style="background:var(--red)"></i>Overdue <b>0</b></span>
       <span class="aqs-leg"><i style="background:#38bdf8"></i>Your move <b>0</b></span>
       <span class="aqs-leg"><i style="background:var(--amber)"></i>Due today <b>0</b></span>
       <span class="aqs-leg"><i style="background:var(--text3)"></i>Monitor <b>0</b></span>
     </div>
-  </div><div class="aq-cols"><div class="aq-main"><div class="aq-empty" style="padding:14px 16px"><div style="font-size:12px;font-weight:600;color:var(--text2)">No urgent actions right now</div><div style="font-size:11.5px;margin-top:5px">Nothing time-critical. Check back tomorrow.</div></div><div class="aq-nextwork"><div class="aq-nextcard" onclick="nav('triage')"><div><div class="aq-next-n" style="color:#c084fc">114</div><div class="aq-next-t">Review Queue</div><div class="aq-next-s">Decide Active vs no action</div></div><button class="btn-sec">Open →</button></div><div class="aq-nextcard" onclick="nav('errors')"><div><div class="aq-next-n" style="color:var(--red)">18</div><div class="aq-next-t">Import Errors</div><div class="aq-next-s">Add missing COG before review</div></div><button class="btn btn-red">Fix →</button></div></div></div><aside class="aq-side"><div class="aq-side-h">Queues &amp; monitoring</div><div class="aq-section"><div class="aq-errcard aq-reviewcard" onclick="nav('triage')"><div><div class="aq-errcard-title" style="color:#c084fc">📋 114 items await review</div><div class="aq-errcard-sub">Newly imported — decide each: move to Active, or No Action.</div></div><button class="btn aq-errbtn" style="background:rgba(192,132,252,.14);border:1px solid #c084fc;color:#c084fc" onclick="event.stopPropagation();nav('triage')">Review Queue →</button></div></div><div class="aq-section"><div class="aq-errcard" onclick="nav('errors')"><div><div class="aq-errcard-title">⚠ 18 import errors need fixing</div><div class="aq-errcard-sub">Rows with no readable COG are blocked — enter the COG to bring them in.</div></div><button class="btn btn-red aq-errbtn" onclick="event.stopPropagation();nav('errors')">Fix Errors →</button></div></div></aside></div></div>
+  </div><div class="aq-cols"><div class="aq-main"><div class="aq-empty" style="padding:14px 16px"><div style="font-size:12px;font-weight:600;color:var(--text2)">No urgent actions right now</div><div style="font-size:11.5px;margin-top:5px">Nothing time-critical — so here's the general queue while it's quiet.</div></div><div class="aq-nextwork"><div class="aq-nextcard" onclick="nav('triage')"><div><div class="aq-next-n" style="color:#c084fc">113</div><div class="aq-next-t">Review Queue</div><div class="aq-next-s">Decide Active vs no action</div></div><button class="btn-sec">Open →</button></div><div class="aq-nextcard" onclick="nav('errors')"><div><div class="aq-next-n" style="color:var(--red)">18</div><div class="aq-next-t">Import Errors</div><div class="aq-next-s">Add missing COG before review</div></div><button class="btn btn-red">Fix →</button></div></div><div class="aq-band"><span class="aq-band-dot" style="background:var(--text3)"></span><span class="aq-band-label">General — when you have time</span><span class="aq-band-sub">Not time-critical, but each one is money to recover.</span></div><div class="aq-section">
+      <div class="aq-section-head">
+        <span class="aq-sh-ico" style="background:var(--surface3);color:var(--text3)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
+        <span class="aq-sh-title">Check MSC — not yet submitted</span>
+        <span class="aq-sh-risk">£294.99 at risk</span>
+        
+        <span class="aq-sh-count" style="background:var(--text3);color:var(--text)">1</span>
+      </div><div class="aq-row" style="--_accent:var(--text3)" onclick="openRecord('8492227442::X002FX948H')">
+      <div class="aq-row-info">
+        <div class="aq-row-name">Garmin CamperCam 795 Caravan/Motorhome GPS Sat Nav, Built in Dash …</div>
+        <span class="aq-ids"><span class="aq-id">B0B3Y7FRX2</span><span class="aq-id">X002FX948H</span><span class="aq-id aq-id-sku">Amuk_329.99_2010_0_VAA_2</span></span>
+        <div class="aq-row-sub">Open MSC, submit at full COG, then log it</div>
+      </div>
+      <div class="aq-dl"><span class="aq-dl-days" style="color:var(--green)">52 days</span><span class="aq-dl-lbl">to deadline</span></div>
+      <span class="aq-amt red">-£294.99</span>
+      <button class="aq-snooze" title="Clear for today — reappears tomorrow" onclick="event.stopPropagation();snoozeAction('8492227442::X002FX948H')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></button>
+      <button class="aq-cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span>Check</span></button>
+    </div></div></div><aside class="aq-side"><div class="aq-side-h">Queues &amp; monitoring</div><div class="aq-section"><div class="aq-errcard aq-reviewcard" onclick="nav('triage')"><div><div class="aq-errcard-title" style="color:#c084fc">📋 113 items await review</div><div class="aq-errcard-sub">Newly imported — decide each: move to Active, or No Action.</div></div><button class="btn aq-errbtn" style="background:rgba(192,132,252,.14);border:1px solid #c084fc;color:#c084fc" onclick="event.stopPropagation();nav('triage')">Review Queue →</button></div></div><div class="aq-section"><div class="aq-errcard" onclick="nav('errors')"><div><div class="aq-errcard-title">⚠ 18 import errors need fixing</div><div class="aq-errcard-sub">Rows with no readable COG are blocked — enter the COG to bring them in.</div></div><button class="btn btn-red aq-errbtn" onclick="event.stopPropagation();nav('errors')">Fix Errors →</button></div></div></aside></div></div>
   </div>
 
   <!-- REVIEW QUEUE / TRIAGE -->
@@ -1702,17 +1719,17 @@ thead th{padding:7px 10px}
       </div>
       <div class="kpi-row" id="triage-kpi"><button class="kpi-card on" onclick="triageSetFilter('')" style="--c:var(--text2)">
       <span class="kpi-ico"></span>
-      <span class="kpi-n">114</span>
+      <span class="kpi-n">113</span>
       <span class="kpi-l">Cases to review</span>
       <span class="kpi-ctx">£661 at risk</span>
     </button><button class="kpi-card " onclick="triageSetFilter('loss')" style="--c:var(--red)">
       <span class="kpi-ico"></span>
-      <span class="kpi-n">71</span>
+      <span class="kpi-n">70</span>
       <span class="kpi-l">Loss-making cases</span>
       <span class="kpi-ctx">£661 total shortfall</span>
     </button><button class="kpi-card " onclick="triageSetFilter('loss10')" style="--c:var(--amber)">
       <span class="kpi-ico"></span>
-      <span class="kpi-n">21</span>
+      <span class="kpi-n">20</span>
       <span class="kpi-l">Priority losses</span>
       <span class="kpi-ctx">over £10 loss each</span>
     </button><button class="kpi-card " onclick="triageSetFilter('profit')" style="--c:var(--green)">
@@ -1780,31 +1797,7 @@ thead th{padding:7px 10px}
     <button class="right on" onclick="srtTriage('net')">P/L ↑</button>
     <button class="" onclick="srtTriage('reason')">Reason</button>
     <button class="right " onclick="srtTriage('deadline')">Deadline</button>
-  </div><div class="rvq-card tier-hi" onclick="openRecord('8492227442::X002FX948H')">
-      <label class="rvq-check" onclick="event.stopPropagation()"><input type="checkbox" class="tsel-cb" data-rid="8492227442::X002FX948H" onclick="toggleTriageSel('8492227442::X002FX948H',this)"></label>
-      <div class="rvq-body">
-        <div class="rvq-top"><span class="rvq-tag tag-hi">High-value loss</span><span class="rvq-name">Garmin CamperCam 795 Caravan/Motorhome GPS Sat Nav, Built in Dash Cam, 7 display, Video storage, Forward Collision/Lane Departure warning, Live Traffic, Birdseye Direct Satellite Imagery</span></div>
-        <div class="rvq-codes"><span class="rvq-code" onclick="event.stopPropagation();copyText('Amuk_329.99_2010_0_VAA_2','SKU')">Amuk_329.99_2010_0_VAA_2</span><span class="rvq-dot">·</span><span class="rvq-code dim" onclick="event.stopPropagation();copyText('B0B3Y7FRX2','ASIN')">B0B3Y7FRX2</span><span class="rvq-dot">·</span><span class="rvq-code dim" onclick="event.stopPropagation();copyText('X002FX948H','FNSKU')">X002FX948H</span></div>
-        <div class="rvq-tags"><span class="pill p-ga" title="SellerFuse adjustment credit. The CSV does not prove which original reimbursement it relates to. Check the original claim/case total: if fully recovered, mark no action; if still short, move to Active and chase the gap.">Adjustment ↺</span><span class="rvq-adjchip" title="Adjustment credit — check the original claim/case total before deciding whether anything is still short.">check original claim</span><span class="rvq-age">52d left</span></div>
-      </div>
-      <div class="rvq-money">
-        <div class="rvq-m"><span class="rvq-m-v">£329.99</span><span class="rvq-m-l">cost</span></div>
-        <div class="rvq-m"><span class="rvq-m-v">£35.00</span><span class="rvq-m-l">Amazon offer</span></div>
-        <div class="rvq-m"><span class="rvq-m-v net-neg">−£294.99</span><span class="rvq-m-l">shortfall</span></div>
-      </div>
-      <div class="rvq-act" onclick="event.stopPropagation()">
-        <button class="btn-primary" onclick="triageMove('8492227442::X002FX948H','active')">Move to Active</button>
-        <div class="menu-wrap"><button class="btn-icon" onclick="toggleMenu(event,'rvqm-8492227442::X002FX948H')" title="More">⋯</button>
-          <div class="menu" id="rvqm-8492227442::X002FX948H">
-            <button onclick="triageMove('8492227442::X002FX948H','no_action')">Mark no action</button>
-            <button onclick="openRecord('8492227442::X002FX948H')">View details</button>
-            <button onclick="copyText('Amuk_329.99_2010_0_VAA_2','SKU')">Copy SKU</button>
-            <button onclick="copyText('B0B3Y7FRX2','ASIN')">Copy ASIN</button>
-            <a href="https://www.amazon.co.uk/dp/B0B3Y7FRX2" target="_blank" rel="noopener">Open on Amazon ↗</a>
-          </div>
-        </div>
-      </div>
-    </div><div class="rvq-card tier-hi" onclick="openRecord('8428021522::X002JD1CFB')">
+  </div><div class="rvq-card tier-hi" onclick="openRecord('8428021522::X002JD1CFB')">
       <label class="rvq-check" onclick="event.stopPropagation()"><input type="checkbox" class="tsel-cb" data-rid="8428021522::X002JD1CFB" onclick="toggleTriageSel('8428021522::X002JD1CFB',this)"></label>
       <div class="rvq-body">
         <div class="rvq-top"><span class="rvq-tag tag-hi">High-value loss</span><span class="rvq-name">Duravit Toilet seat Starck 3, Soft Close Toilet seat, Urea thermoset Toilet lid, Toilet Cover with Stainless Steel Hinges, White</span></div>
@@ -4538,7 +4531,50 @@ thead th{padding:7px 10px}
           <option value="Damaged_Warehouse">Damaged WH</option><option value="CustomerReturn">Customer return</option><option value="CustomerServiceIssue">CS issue</option></select>
         <label class="rvq-toggle" title="View option only — never merges or changes the underlying reimbursement rows"><input type="checkbox" id="errors-group" onchange="renderErrors()"><span>Group matching SKUs (view)</span></label>
       </div>
-      <div class="rvq-list" id="tbl-errors"><div class="cog-ticket" onclick="openImportErrorDetails('8505209822::X0028C1MIF')">
+      <div class="rvq-list" id="tbl-errors"><div class="cog-ticket" onclick="openImportErrorDetails('8477779142::X00242EFKB')">
+      <div class="cog-ticket-main">
+        <div class="cog-ticket-top"><span class="cog-ticket-title">Eveline Cosmetics Celebrities Ultra-Precise Liquid Eyeliner - Brown, Vegan, Long-Lasting Formula</span></div>
+        <div class="cog-ticket-sub">
+          <button class="cog-chip" onclick="event.stopPropagation();copyText('16-LNDX-V0JU','SKU')">16-LNDX-V0JU</button>
+          <button class="cog-chip linkish" onclick="event.stopPropagation();copyText('B00HZHREPK','ASIN')">B00HZHREPK</button>
+          <button class="cog-chip" onclick="event.stopPropagation();copyText('X00242EFKB','FNSKU')">X00242EFKB</button>
+          <button class="cog-chip" onclick="event.stopPropagation();copyText('8477779142','Reimbursement ID')">Reimb 8477779142</button>
+        </div>
+        <div class="cog-ticket-meta">
+          <span class="pill p-lw" title="Item lost inside Amazon's warehouse — claimable">Lost WH</span>
+          <span class="cog-meta-tile">15d ago</span>
+          <span class="cog-meta-tile cog-meta-money"><strong>£1.36</strong> reimbursed</span>
+          <span class="cog-meta-tile cog-meta-qty">Qty 1</span>
+          <span class="cog-meta-tile cog-missing-label">COG missing</span>
+        </div>
+      </div>
+      <div class="cog-ticket-status">
+        <div class="cog-status-cell"><div class="cog-status-l">Review status</div><div class="cog-status-v bad">Blocked</div></div>
+        <div class="cog-status-cell"><div class="cog-status-l">Claim window</div><div class="cog-status-v ">45d left</div></div>
+        <div class="cog-status-cell"><div class="cog-status-l">Value waiting</div><div class="cog-status-v good">£1.36</div></div>
+        <div class="cog-status-cell"><div class="cog-status-l">Next</div><div class="cog-status-v">Add COG</div></div>
+      </div>
+      <div class="cog-ticket-actions" onclick="event.stopPropagation()">
+        <div class="cog-entry">
+        <label class="cog-entry-l">COG</label>
+        <div class="cog-entry-row">
+          <div class="cog-field"><span>£</span><input type="number" step="0.01" min="0.01" id="err-cog-8477779142::X00242EFKB" value="" placeholder="0.00" onkeydown="if(event.key==='Enter')fixCogAndMove('8477779142::X00242EFKB')"></div>
+        </div>
+      </div>
+        <a class="cog-action-tile sf-cog-btn" href="https://app.sellerfuse.com/cogs-wizard?filter=B00HZHREPK&amp;tab=with-cogs" target="_blank" rel="noopener" title="Open this product in SellerFuse COG wizard">Open SF</a>
+        <button class="cog-action-tile cog-action-primary" onclick="fixCogAndMove('8477779142::X00242EFKB')">Save</button>
+        <div class="menu-wrap"><button class="btn-icon" onclick="toggleMenu(event,'errm-8477779142::X00242EFKB')" title="More">⋯</button>
+          <div class="menu" id="errm-8477779142::X00242EFKB">
+            <button onclick="openImportErrorDetails('8477779142::X00242EFKB')">View details</button>
+            <button onclick="errorToHistory('8477779142::X00242EFKB')">Mark not recoverable</button>
+            <button onclick="copyText('16-LNDX-V0JU','SKU')">Copy SKU</button>
+            <button onclick="copyText('B00HZHREPK','ASIN')">Copy ASIN</button>
+            <a href="https://www.amazon.co.uk/dp/B00HZHREPK" target="_blank" rel="noopener">Open on Amazon ↗</a>
+            <button onclick="copyText('8477779142','Reimbursement ID')">Copy reimbursement ID</button>
+          </div>
+        </div>
+      </div>
+    </div><div class="cog-ticket" onclick="openImportErrorDetails('8505209822::X0028C1MIF')">
       <div class="cog-ticket-main">
         <div class="cog-ticket-top"><span class="cog-ticket-title">Summer Revived Gradual Tanning Lotion Light to Medium 200ml Bundled With Lavarion Exfoliating Glove &amp; Self Tanning Mitt – Streak-Free Self Tan Set for Smooth, Natural Glow</span></div>
         <div class="cog-ticket-sub">
@@ -4793,49 +4829,6 @@ thead th{padding:7px 10px}
             <button onclick="copyText('B0H2QRTY5Y','ASIN')">Copy ASIN</button>
             <a href="https://www.amazon.co.uk/dp/B0H2QRTY5Y" target="_blank" rel="noopener">Open on Amazon ↗</a>
             <button onclick="copyText('8482708732','Reimbursement ID')">Copy reimbursement ID</button>
-          </div>
-        </div>
-      </div>
-    </div><div class="cog-ticket" onclick="openImportErrorDetails('8477779142::X00242EFKB')">
-      <div class="cog-ticket-main">
-        <div class="cog-ticket-top"><span class="cog-ticket-title">Eveline Cosmetics Celebrities Ultra-Precise Liquid Eyeliner - Brown, Vegan, Long-Lasting Formula</span></div>
-        <div class="cog-ticket-sub">
-          <button class="cog-chip" onclick="event.stopPropagation();copyText('16-LNDX-V0JU','SKU')">16-LNDX-V0JU</button>
-          <button class="cog-chip linkish" onclick="event.stopPropagation();copyText('B00HZHREPK','ASIN')">B00HZHREPK</button>
-          <button class="cog-chip" onclick="event.stopPropagation();copyText('X00242EFKB','FNSKU')">X00242EFKB</button>
-          <button class="cog-chip" onclick="event.stopPropagation();copyText('8477779142','Reimbursement ID')">Reimb 8477779142</button>
-        </div>
-        <div class="cog-ticket-meta">
-          <span class="pill p-lw" title="Item lost inside Amazon's warehouse — claimable">Lost WH</span>
-          <span class="cog-meta-tile">15d ago</span>
-          <span class="cog-meta-tile cog-meta-money"><strong>£1.36</strong> reimbursed</span>
-          <span class="cog-meta-tile cog-meta-qty">Qty 1</span>
-          <span class="cog-meta-tile cog-missing-label">COG missing</span>
-        </div>
-      </div>
-      <div class="cog-ticket-status">
-        <div class="cog-status-cell"><div class="cog-status-l">Review status</div><div class="cog-status-v bad">Blocked</div></div>
-        <div class="cog-status-cell"><div class="cog-status-l">Claim window</div><div class="cog-status-v ">45d left</div></div>
-        <div class="cog-status-cell"><div class="cog-status-l">Value waiting</div><div class="cog-status-v good">£1.36</div></div>
-        <div class="cog-status-cell"><div class="cog-status-l">Next</div><div class="cog-status-v">Add COG</div></div>
-      </div>
-      <div class="cog-ticket-actions" onclick="event.stopPropagation()">
-        <div class="cog-entry">
-        <label class="cog-entry-l">COG</label>
-        <div class="cog-entry-row">
-          <div class="cog-field"><span>£</span><input type="number" step="0.01" min="0.01" id="err-cog-8477779142::X00242EFKB" value="" placeholder="0.00" onkeydown="if(event.key==='Enter')fixCogAndMove('8477779142::X00242EFKB')"></div>
-        </div>
-      </div>
-        <a class="cog-action-tile sf-cog-btn" href="https://app.sellerfuse.com/cogs-wizard?filter=B00HZHREPK&amp;tab=with-cogs" target="_blank" rel="noopener" title="Open this product in SellerFuse COG wizard">Open SF</a>
-        <button class="cog-action-tile cog-action-primary" onclick="fixCogAndMove('8477779142::X00242EFKB')">Save</button>
-        <div class="menu-wrap"><button class="btn-icon" onclick="toggleMenu(event,'errm-8477779142::X00242EFKB')" title="More">⋯</button>
-          <div class="menu" id="errm-8477779142::X00242EFKB">
-            <button onclick="openImportErrorDetails('8477779142::X00242EFKB')">View details</button>
-            <button onclick="errorToHistory('8477779142::X00242EFKB')">Mark not recoverable</button>
-            <button onclick="copyText('16-LNDX-V0JU','SKU')">Copy SKU</button>
-            <button onclick="copyText('B00HZHREPK','ASIN')">Copy ASIN</button>
-            <a href="https://www.amazon.co.uk/dp/B00HZHREPK" target="_blank" rel="noopener">Open on Amazon ↗</a>
-            <button onclick="copyText('8477779142','Reimbursement ID')">Copy reimbursement ID</button>
           </div>
         </div>
       </div>
@@ -5359,9 +5352,9 @@ thead th{padding:7px 10px}
       <label class="fb-check"><input type="checkbox" id="f-hide-rev" onchange="renderActive()" checked=""> Hide reversals</label>
       <button class="btn btn-sec" style="padding:4px 10px;font-size:10.5px" onclick="arAllToggle()" title="Toggle all cards between full and compact view">⌃⌄ Collapse / expand all</button>
     </div>
-    <div class="ar-tagbar" id="active-tags"><button class="ar-tag on" onclick="setActiveTag('all')">All<span class="ar-tag-n">0</span></button><button class="ar-tag " onclick="setActiveTag('overdue')">Overdue re-updates<span class="ar-tag-n">0</span></button><button class="ar-tag " onclick="setActiveTag('submitted')">MSC submitted<span class="ar-tag-n">0</span></button><button class="ar-tag " onclick="setActiveTag('review')">MSC under review<span class="ar-tag-n">0</span></button><button class="ar-tag " onclick="setActiveTag('docs')">Needs document<span class="ar-tag-n">0</span></button><button class="ar-tag " onclick="setActiveTag('approved')">MSC approved<span class="ar-tag-n">0</span></button><button class="ar-tag " onclick="setActiveTag('reduced')">Reduced MSC approved<span class="ar-tag-n">0</span></button><button class="ar-tag " onclick="setActiveTag('denied')">MSC denied<span class="ar-tag-n">0</span></button><button class="ar-tag " onclick="setActiveTag('caseopen')">Case opened<span class="ar-tag-n">0</span></button><button class="ar-tag " onclick="setActiveTag('reimbpending')">Reimbursement pending<span class="ar-tag-n">0</span></button><button class="ar-tag " onclick="setActiveTag('escalated')">Escalated to Jack<span class="ar-tag-n">0</span></button></div>
+    <div class="ar-tagbar" id="active-tags"><button class="ar-tag on" onclick="setActiveTag('all')">All<span class="ar-tag-n">1</span></button><button class="ar-tag " onclick="setActiveTag('overdue')">Overdue re-updates<span class="ar-tag-n">0</span></button><button class="ar-tag " onclick="setActiveTag('submitted')">MSC submitted<span class="ar-tag-n">0</span></button><button class="ar-tag " onclick="setActiveTag('review')">MSC under review<span class="ar-tag-n">0</span></button><button class="ar-tag " onclick="setActiveTag('docs')">Needs document<span class="ar-tag-n">0</span></button><button class="ar-tag " onclick="setActiveTag('approved')">MSC approved<span class="ar-tag-n">0</span></button><button class="ar-tag " onclick="setActiveTag('reduced')">Reduced MSC approved<span class="ar-tag-n">0</span></button><button class="ar-tag " onclick="setActiveTag('denied')">MSC denied<span class="ar-tag-n">0</span></button><button class="ar-tag " onclick="setActiveTag('caseopen')">Case opened<span class="ar-tag-n">0</span></button><button class="ar-tag " onclick="setActiveTag('reimbpending')">Reimbursement pending<span class="ar-tag-n">0</span></button><button class="ar-tag " onclick="setActiveTag('escalated')">Escalated to Jack<span class="ar-tag-n">0</span></button></div>
     <div class="tbl-wrap">
-      <div class="ar-list" id="tbl-active"><div style="text-align:center;padding:48px;color:var(--text3)">No active reimbursements match these filters.</div></div>
+      <div class="ar-list" id="tbl-active"><div class="ar-card rs-amber is-open" data-rid="8492227442::X002FX948H"><div class="ar-zhead" onclick="arHeadClick(event,'8492227442::X002FX948H')"><div class="ar-head"><div class="ar-name">Garmin CamperCam 795 Caravan/Motorhome GPS Sat Nav, Built in Dash Cam, 7 display, Video storage, Forward Collision/Lane Departure warning, Live Traffic, Birdseye Direct Satellite Imagery</div><div class="ar-chips"><span class="id-chip id-chip-link"><span class="id-lbl">ASIN</span><button type="button" class="id-copy-in" onclick="event.stopPropagation();copyText('B0B3Y7FRX2','ASIN',event)" title="Copy ASIN">B0B3Y7FRX2</button><a href="https://www.amazon.co.uk/dp/B0B3Y7FRX2" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="id-open-in" title="Open on Amazon ↗">↗</a></span><button type="button" class="id-chip td-copy" onclick="event.stopPropagation();copyText('X002FX948H','FNSKU',event)"><span class="id-lbl">FNSKU</span>X002FX948H</button><button type="button" class="id-chip td-copy" onclick="event.stopPropagation();copyText('Amuk_329.99_2010_0_VAA_2','SKU',event)"><span class="id-lbl">SKU</span>Amuk_329.99_2010_0_VAA_2</button></div></div><div class="ar-tags"><span class="pill p-ga" title="SellerFuse adjustment credit. The CSV does not prove which original reimbursement it relates to. Check the original claim/case total: if fully recovered, mark no action; if still short, move to Active and chase the gap.">Adjustment ↺</span><select class="ar-statsel" onclick="event.stopPropagation()" onchange="arStatus('8492227442::X002FX948H',this.value)"><option value="needs" selected="">Needs MSC</option><option value="review">MSC submitted</option><option value="denied">MSC denied</option><option value="approved">MSC approved</option><option value="reduced">MSC reduced</option><option value="docs">Needs doc</option><option value="caseopen">Case open</option><option value="reimbursed">Reimbursed</option></select><div class="ar-sa"><span class="na-pill na-msc">Check MSC</span></div></div><button class="ar-expand" onclick="event.stopPropagation();arToggle('8492227442::X002FX948H')" title="Collapse">▾</button></div><div class="ar-detail"><div class="ar-glance"><div class="ar-gc"><div class="ar-gc-lbl">To recover</div><div class="ar-gc-big" style="color:var(--red)">£294.99</div><div class="ar-gc-sub">below £329.99 cost</div></div><div class="ar-gc"><div class="ar-gc-lbl">Claim deadline</div><div class="ar-gc-big" style="color:var(--green)">52d left</div><div class="ar-gc-sub">Day 8/60 · closes 29/08/2026</div><div class="ar-gc-bar"><div class="ar-gc-barfill" style="width:13%;background:var(--green)"></div><span class="ar-gc-bartick" style="left:91.6%"></span></div></div><div class="ar-gc ar-gc-next" style="--rc:var(--accent)" title="Open the MSC portal, submit at full COG, then log the attempt."><div class="ar-gc-lbl">Do next</div><div class="ar-gc-eb" style="color:var(--text3)">Not started</div><div class="ar-gc-actions"><button class="ar-gc-cta" onclick="event.stopPropagation();window.open(MSC_PORTAL_URL,'_blank')">MSC Portal ↗</button><div class="ar-qa"><button class="ar-qa-b qa-a" onclick="event.stopPropagation();arQuick('8492227442::X002FX948H','submit')">＋ MSC submitted</button></div></div></div></div><div class="ar-zprog"><div class="ar-prog"><div class="ar-seg current"><span class="ar-segmark">1</span>Needs MSC</div><div class="ar-seg "><span class="ar-segmark">2</span>MSC submitted</div><div class="ar-seg "><span class="ar-segmark">3</span>Result</div><div class="ar-seg "><span class="ar-segmark">4</span>Case open</div><div class="ar-seg "><span class="ar-segmark">5</span>Reimbursed</div></div></div><div class="ar-details"><div class="ar-dcol"><div class="ar-sec-h">Money</div><div class="ar-r"><label>COG £ (from SKU)</label><div class="ar-r-v ro"><span style="color:var(--green);font-weight:800">£329.99</span> <span style="color:var(--text3)">auto</span></div></div><div class="ar-r"><label>Reimb £ (Amazon paid)</label><div class="ar-r-v"><input class="ar-inp" type="number" step="0.01" value="35.00" placeholder="—" onclick="event.stopPropagation()" onchange="arSet('8492227442::X002FX948H','reimb_amount',this.value,'rec')"></div></div><div class="ar-r"><label>Shortfall</label><div class="ar-r-v ro"><span style="color:var(--red)">−£294.99</span></div></div><div class="ar-r empty"><label>Invoice</label><div class="ar-r-v"><input class="ar-inp ar-inp-wide" type="text" placeholder="paste invoice link" onclick="event.stopPropagation()" onchange="arSet('8492227442::X002FX948H','invoice_link',this.value,'ann')"></div></div></div><div class="ar-dcol"><div class="ar-sec-h">Claim tracking</div><div class="ar-r"><label>Reimb date</label><div class="ar-r-v ro">30/06/2026</div></div><div class="ar-r"><label>Next MSC update</label><div class="ar-r-v ro"><span style="color:var(--text3)">—</span></div></div><div class="ar-r empty"><label>New Case ID</label><div class="ar-r-v"><input class="ar-inp" type="text" value="" placeholder="paste case ID" onclick="event.stopPropagation()" onchange="arSet('8492227442::X002FX948H','new_case_id',this.value,'ann')"></div></div><div class="ar-r empty"><label>New Reimb ID</label><div class="ar-r-v"><input class="ar-inp" type="text" value="" placeholder="paste when paid" onclick="event.stopPropagation()" onchange="arSet('8492227442::X002FX948H','new_reimb_id',this.value,'ann')"></div></div></div><div class="ar-dcol ar-dcol-full ar-ladder-band"><div class="ar-ladder"><div class="att-rung att-empty"><span class="att-out" style="color:var(--text3)">No attempts yet.</span> <span class="att-amt" style="color:var(--text2)">Submit at £329.99 (full COG)</span><button class="att-go" onclick="event.stopPropagation();arQuick('8492227442::X002FX948H','submit')">Log MSC</button></div></div></div></div><div class="ar-footer"><div class="ar-foot"><button class="btn btn-amber ar-btn" onclick="event.stopPropagation();addMscAtt('8492227442::X002FX948H')">+ MSC</button><button class="btn btn-sec ar-btn" onclick="event.stopPropagation();openCaseGenModal('8492227442::X002FX948H')">Case msg</button><button class="btn btn-sec ar-btn" onclick="event.stopPropagation();openRecord('8492227442::X002FX948H')">Details</button><button class="btn btn-green ar-btn" onclick="event.stopPropagation();promptReimbursed('8492227442::X002FX948H')">✓ Reimbursed</button><a class="ar-link" href="https://sellercentral.amazon.co.uk/inventory-reimbursement/cost-management" target="_blank" onclick="event.stopPropagation()">MSC Portal ↗</a><button class="ar-navlink" onclick="event.stopPropagation();arSet('8492227442::X002FX948H','workflow_status','triage','ann')">← Send back to Review</button></div></div></div></div></div>
     </div>
   </div>
 
@@ -5381,8 +5374,8 @@ thead th{padding:7px 10px}
         <div class="hd-hs"><span class="hd-hs-l">Total COG</span><span class="hd-hs-v">£0.00</span></div>
         <div class="hd-hs"><span class="hd-hs-l">Reversals</span><span class="hd-hs-v" style="color:var(--red)">−£77.70</span></div>
         <div class="hd-hs"><span class="hd-hs-l">Settled items</span><span class="hd-hs-v">6</span></div>
-        <div class="hd-hs"><span class="hd-hs-l">Still owed (open)</span><span class="hd-hs-v" style="color:inherit">£0.00</span></div>
-        <div class="hd-hs"><span class="hd-hs-l">Items still active</span><span class="hd-hs-v">0</span></div>
+        <div class="hd-hs"><span class="hd-hs-l">Still owed (open)</span><span class="hd-hs-v" style="color:var(--red)">£294.99</span></div>
+        <div class="hd-hs"><span class="hd-hs-l">Items still active</span><span class="hd-hs-v">1</span></div>
       </div>
     </div>
     <div class="hd-verdict neutral">No worked cases settled in All time yet. Once you re-evaluate and settle cases, this tells you whether the process is paying off.</div>
@@ -5438,7 +5431,7 @@ thead th{padding:7px 10px}
       </div>
       
       <div class="hb-ctxbar">
-        
+        <span class="hb-ctx-pill amber">1 still in Active — not in these figures</span>
         <span class="hb-ctx-pill red">6 reversals · −£77.70 overall impact</span>
       </div>
       <div class="hb-banner"><b>6 Amazon reversals · −£77.70</b><span>Money clawed back by Amazon. Counts in Overall only.</span></div>
@@ -5462,9 +5455,9 @@ thead th{padding:7px 10px}
         <div class="cg-left">
           <div class="f">
             <label>Select Reimbursement Record</label>
-            <select class="fb-select" id="cg-record" onchange="cgUpdate()" style="width:100%"><option value="">Choose record…</option></select>
+            <select class="fb-select" id="cg-record" onchange="cgUpdate()" style="width:100%"><option value="">Choose record…</option><option value="8492227442::X002FX948H">[8492227442] Garmin CamperCam 795 Caravan/Motorhome GPS Sat Nav — -£294.99</option></select>
           </div>
-          <div id="cg-quickpick" class="cg-quickpick"><div class="cg-qp-empty">No loss-making claims to build a case for. Work the Review Queue first, or import a month.</div></div>
+          <div id="cg-quickpick" class="cg-quickpick"><div class="cg-qp-h">Or pick a claim to chase — biggest shortfalls first</div><button class="cg-qp" onclick="cgPick('8492227442::X002FX948H')"><span class="cg-qp-rank">1</span><span class="cg-qp-main"><span class="cg-qp-name">Garmin CamperCam 795 Caravan/Motorhome GPS S</span><span class="cg-qp-sub">B0B3Y7FRX2 · <span class="pill p-ga" title="SellerFuse adjustment credit. The CSV does not prove which original reimbursement it relates to. Check the original claim/case total: if fully recovered, mark no action; if still short, move to Active and chase the gap.">Adjustment ↺</span></span></span><span class="cg-qp-amt">-£294.99</span></button></div>
           <div id="cg-record-info" style="display:none">
             <div class="cost-bar" style="margin-bottom:10px">
               <div class="cb-col">
@@ -5752,7 +5745,7 @@ thead th{padding:7px 10px}
         </div>
         <div class="ss-body">
           <div style="font-size:11.5px;color:var(--text2);line-height:1.5">
-            Current data loaded: <strong id="data-counts">0 active · 114 review · 18 COG errors · 6 history · 1 batches</strong>
+            Current data loaded: <strong id="data-counts">1 active · 113 review · 18 COG errors · 6 history · 1 batches</strong>
           </div>
           <div class="month-delete-card">
             <div class="month-delete-title">Delete one imported month</div>
@@ -5761,7 +5754,7 @@ thead th{padding:7px 10px}
               <select class="fb-select" id="delete-batch-select" onchange="updateDeleteBatchSummary()"><option value="2026-06_to_2026-06_1783500162740">2026-06 to 2026-06</option></select>
               <button class="btn btn-danger" id="delete-batch-btn" onclick="deleteSelectedBatch()">Delete selected month from Supabase…</button>
             </div>
-            <div class="month-delete-meta" id="delete-batch-summary"><strong>2026-06 to 2026-06:</strong> 138 imported rows found: 114 review · 18 COG errors · 0 active · 6 history.</div>
+            <div class="month-delete-meta" id="delete-batch-summary"><strong>2026-06 to 2026-06:</strong> 138 imported rows found: 113 review · 18 COG errors · 1 active · 6 history.</div>
           </div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:2px">
             <button class="btn btn-danger" onclick="resetAllData()">Remove All Imported Data</button>
