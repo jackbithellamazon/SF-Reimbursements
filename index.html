@@ -2692,7 +2692,11 @@ async function cloudPull(){
     if (rq.error) throw rq.error;
     const remoteRecs = rq.data||[];
     if (remoteRecs.length){
-      const annMap={}; (aq.data||[]).forEach(a=>{ const {reimb_id,owner_id,updated_at,...rest}=a; annMap[reimb_id]=rest; });
+      const annMap={}; (aq.data||[]).forEach(a=>{
+        const {reimb_id,owner_id,updated_at,extra,...rest}=a;
+        // `extra` jsonb carries the fields without their own column (notes, snooze, etc.)
+        annMap[reimb_id]={...rest, ...((extra && typeof extra==='object')?extra:{})};
+      });
       // Reconstruct records / archived / importErrors from workflow_status
       const rebuilt = remoteRecs.map(row=> (row.raw && typeof row.raw==='object') ? row.raw : row);
       records=[]; archived=[]; importErrors=[];
@@ -2755,19 +2759,49 @@ async function cloudPushNow(){
       });
       const allRecs = [...records, ...archived, ...importErrors];
       const reimbRows = allRecs.map(toReimbRow);
-      const annRows = Object.entries(annotations).map(([id,a])=>({
-        reimb_id:id, owner_id:OWNER,
-        workflow_status:a.workflow_status||null, msc_status:a.msc_status||null,
-        msc_attempts:a.msc_attempts||[], review_date:a.review_date||null,
-        case_status:a.case_status||null, new_case_id:a.new_case_id||null, new_reimb_id:a.new_reimb_id||null,
-        case_opened_date:a.case_opened_date||null, outcome:a.outcome||null,
-        invoice_link:a.invoice_link||null, no_cog:!!a.no_cog, audit:a.audit||[],
-        updated_at:new Date().toISOString(),
-      })).filter(a=>reimbRows.some(r=>String(r.id)===String(a.reimb_id)));  // FK-safe
+      // Columns with a real Supabase column. Anything else on the annotation
+      // (notes, snooze_until, status_changed_at, future fields…) rides in `extra`
+      // jsonb so nothing is ever silently dropped from the cloud mirror again.
+      const ANN_COLS = ['workflow_status','msc_status','msc_attempts','review_date','case_status',
+        'new_case_id','new_reimb_id','case_opened_date','outcome','invoice_link','no_cog','audit',
+        'msc_amount','msc_reason','case_attempts','final_reimb_amount','reimb_date','reeval_date'];
+      const NEW_ANN_KEYS = ['msc_amount','msc_reason','case_attempts','final_reimb_amount','reimb_date','reeval_date','extra'];
+      const annRows = Object.entries(annotations).map(([id,a])=>{
+        const extra = {};
+        Object.keys(a).forEach(k=>{ if(!ANN_COLS.includes(k)) extra[k]=a[k]; });
+        return {
+          reimb_id:id, owner_id:OWNER,
+          workflow_status:a.workflow_status||null, msc_status:a.msc_status||null,
+          msc_attempts:a.msc_attempts||[], review_date:a.review_date||null,
+          case_status:a.case_status||null, new_case_id:a.new_case_id||null, new_reimb_id:a.new_reimb_id||null,
+          case_opened_date:a.case_opened_date||null, outcome:a.outcome||null,
+          invoice_link:a.invoice_link||null, no_cog:!!a.no_cog, audit:a.audit||[],
+          msc_amount:(a.msc_amount!=null && a.msc_amount!=='')?Number(a.msc_amount):null,
+          msc_reason:a.msc_reason||null,
+          case_attempts:a.case_attempts||[],
+          final_reimb_amount:(a.final_reimb_amount!=null && a.final_reimb_amount!=='')?Number(a.final_reimb_amount):null,
+          reimb_date:a.reimb_date||null, reeval_date:a.reeval_date||null,
+          extra,
+          updated_at:new Date().toISOString(),
+        };
+      }).filter(a=>reimbRows.some(r=>String(r.id)===String(a.reimb_id)));  // FK-safe
       // chunked upserts (Supabase caps payload size)
       const chunk=(arr,n)=>arr.length?Array.from({length:Math.ceil(arr.length/n)},(_,i)=>arr.slice(i*n,i*n+n)):[];
       for(const c of chunk(reimbRows,200)){ const {error}=await _sb.from('sfre_reimbursements').upsert(c,{onConflict:'id'}); if(error) throw error; }
-      for(const c of chunk(annRows,200)){ const {error}=await _sb.from('sfre_annotations').upsert(c,{onConflict:'reimb_id'}); if(error) throw error; }
+      // Graceful pre-migration fallback: if the new columns don't exist yet
+      // (schema SQL not run), strip them and push the legacy shape so sync
+      // never breaks — the new fields just stay browser-side until migration.
+      let _annLegacyMode = false;
+      for(const c of chunk(annRows,200)){
+        let {error}=await _sb.from('sfre_annotations').upsert(_annLegacyMode?c.map(stripNew):c,{onConflict:'reimb_id'});
+        if(error && /column|schema/i.test(error.message||'') && !_annLegacyMode){
+          _annLegacyMode = true;
+          console.warn('sfre_annotations missing new columns — run the migration SQL. Falling back to legacy shape.');
+          ({error}=await _sb.from('sfre_annotations').upsert(c.map(stripNew),{onConflict:'reimb_id'}));
+        }
+        if(error) throw error;
+      }
+      function stripNew(row){ const r={...row}; NEW_ANN_KEYS.forEach(k=>delete r[k]); return r; }
       if(batches.length){
         const brows=batches.map(b=>({id:String(b.id||b.batch_id||(b.from+'_'+b.to+'_'+b.imported_at)), owner_id:OWNER, meta:b}));
         const {error:bErr}=await _sb.from('sfre_batches').upsert(brows,{onConflict:'id'});
