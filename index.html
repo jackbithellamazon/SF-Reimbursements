@@ -114,6 +114,14 @@ input:focus,select:focus,textarea:focus,.fb-input:focus,.fb-select:focus{outline
 }
 .sb-logo{padding:12px 12px 13px;border-bottom:1px solid rgba(148,163,184,.13);background:linear-gradient(180deg,rgba(34,201,132,.045),rgba(125,211,252,.02) 64%,transparent)}
 .sb-logo-text{overflow:hidden;min-width:0}
+.build-tag{display:inline-block;margin-left:4px;font-size:8.5px;font-weight:800;letter-spacing:.03em;color:var(--green);background:var(--green-dim);border:1px solid color-mix(in srgb,var(--green) 35%,transparent);border-radius:99px;padding:0 6px;vertical-align:1px}
+/* Deadline warning banner on Active */
+.adb{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 12px 8px;padding:8px 12px;background:var(--red-dim);border:1px solid color-mix(in srgb,var(--red) 45%,var(--border));border-radius:10px}
+.adb-t{font-size:11.5px;font-weight:800;color:var(--red)}
+.adb-chip{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;color:var(--text);background:var(--surface);border:1px solid color-mix(in srgb,var(--red) 35%,var(--border));border-radius:8px;padding:3px 9px;cursor:pointer;font-family:inherit}
+.adb-chip b{color:var(--red)}
+.adb-chip:hover{border-color:var(--red)}
+.adb-more{font-size:10px;color:var(--text3)}
 .sb-brand{display:flex;align-items:center;gap:10px;min-width:0}
 .sf-mark{
   width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;
@@ -955,6 +963,22 @@ tbody tr:hover .td-copy{border-bottom-color:var(--border2)}
 .cg-qp-empty{font-size:11px;color:var(--text3);padding:14px;text-align:center;background:var(--surface2);border:1px dashed var(--border2);border-radius:var(--r);line-height:1.5}
 .cg-qp{display:flex;align-items:center;gap:9px;padding:6px 9px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--rs);cursor:pointer;text-align:left;font-family:inherit;transition:border-color .12s,background .12s;width:100%}
 .cg-qp:hover{border-color:var(--accent);background:var(--surface3)}
+.cg-qp.on{border-color:var(--accent);background:var(--surface3);box-shadow:inset 3px 0 0 var(--accent)}
+.cg-qp-list{display:flex;flex-direction:column;gap:5px;flex:1 1 auto;min-height:60px;overflow-y:auto;padding-right:4px}
+.cg-search{max-width:none;width:100%;margin-top:5px;flex:0 0 auto}
+.cg-qp-clear{background:none;border:0;color:var(--accent);cursor:pointer;font-family:inherit;font-size:11px;text-decoration:underline;padding:0}
+/* Cases you've opened — compact bottom strip, no dead space below */
+.cg-recent{flex:none;margin-top:12px;max-height:168px;overflow-y:auto}
+.cg-recent-h{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--text2);margin-bottom:9px;display:flex;align-items:center;gap:8px}
+.cg-recent-h span{background:var(--surface3);border:1px solid var(--border2);border-radius:99px;padding:1px 8px;font-size:10px;color:var(--text2)}
+.cg-recent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:9px}
+.cg-recent-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 12px;cursor:pointer;transition:border-color .12s,transform .1s}
+.cg-recent-card:hover{border-color:var(--accent);transform:translateY(-1px)}
+.cg-recent-name{font-size:12px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cg-recent-meta{display:flex;align-items:center;gap:7px;margin-top:6px}
+.cg-recent-id{font-family:var(--mono);font-size:10.5px;color:var(--text2)}
+.cg-recent-st{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;border:1px solid;border-radius:99px;padding:1px 7px;margin-left:auto}
+.cg-recent-sub{font-size:10px;color:var(--text3);margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cg-qp-rank{flex:0 0 18px;height:18px;border-radius:5px;background:var(--surface3);color:var(--text3);font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center}
 .cg-qp-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
 .cg-qp-name{font-size:11px;font-weight:600;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -962,12 +986,16 @@ tbody tr:hover .td-copy{border-bottom-color:var(--border2)}
 .cg-qp-amt{font-size:12px;font-weight:800;color:var(--red);font-variant-numeric:tabular-nums;white-space:nowrap}
 /* Bounded, content-height layout — was height:100% which stretched the empty
    message panel to fill the whole viewport (the "big dead space"). */
-.cg-wrap{display:grid;grid-template-columns:minmax(300px,440px) minmax(360px,1fr);gap:14px;max-width:1120px;align-items:start}
-.cg-left{display:flex;flex-direction:column;gap:10px;min-width:0}
+/* Full-height layout — fills the viewport, no bottom dead space; lists scroll internally */
+#page-casegen .page-body{display:flex;flex-direction:column;height:100%;overflow:hidden}
+#page-casegen .page-body>div:first-child{flex:none}
+.cg-wrap{display:grid;grid-template-columns:minmax(300px,440px) minmax(360px,1fr);gap:14px;max-width:1240px;align-items:stretch;flex:1 1 auto;min-height:0}
+.cg-left{display:flex;flex-direction:column;gap:10px;min-width:0;min-height:0}
+.cg-pick-head{flex:none}
+.cg-quickpick{display:flex;flex-direction:column;min-height:0;flex:1 1 auto}
 .cg-right{
   background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
-  display:flex;flex-direction:column;overflow:hidden;
-  position:sticky;top:8px;min-height:340px;max-height:calc(100vh - 130px);
+  display:flex;flex-direction:column;overflow:hidden;height:100%;min-height:0;
 }
 .cg-preview-header{
   padding:8px 11px;border-bottom:1px solid var(--border);
@@ -984,8 +1012,18 @@ tbody tr:hover .td-copy{border-bottom-color:var(--border2)}
 .cg-preview-body.cg-empty{display:flex;align-items:center;justify-content:center;text-align:center;white-space:normal}
 .cg-empty-in{max-width:320px;padding:20px}
 .cg-empty-ico{font-size:30px;opacity:.85;margin-bottom:10px}
-.cg-empty-t{font-size:13px;font-weight:700;color:var(--text);margin-bottom:5px}
+.cg-empty-t{font-size:14px;font-weight:800;color:var(--text);margin-bottom:5px}
 .cg-empty-s{font-size:11.5px;color:var(--text3);line-height:1.55}
+.cg-empty-in{max-width:380px}
+.cg-empty-stats{display:flex;gap:8px;justify-content:center;margin:16px 0 4px}
+.cg-es{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:9px 6px}
+.cg-es b{display:block;font-size:17px;font-weight:800;color:var(--text);font-variant-numeric:tabular-nums;line-height:1}
+.cg-es span{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);margin-top:4px}
+.cg-empty-cta{margin:14px 0 4px;width:100%;background:var(--accent);color:#fff;border:0;border-radius:9px;padding:9px 12px;font-size:11.5px;font-weight:700;font-family:inherit;cursor:pointer;transition:filter .12s}
+.cg-empty-cta:hover{filter:brightness(1.08)}
+.cg-steps{display:flex;flex-direction:column;gap:6px;margin-top:16px;text-align:left;border-top:1px solid var(--border);padding-top:14px}
+.cg-step{display:flex;align-items:center;gap:9px;font-size:11px;color:var(--text2)}
+.cg-step-n{flex:0 0 18px;height:18px;border-radius:50%;background:var(--surface3);border:1px solid var(--border2);color:var(--text2);font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center}
 
 /* ─── SETTINGS ─── */
 .settings-section{
@@ -1954,6 +1992,55 @@ body{font-size:13px;letter-spacing:0}
 .ar-dcol-full.ar-ladder-band{margin-top:5px;padding-top:5px}
 .ar-foot{padding:6px 10px;gap:6px}
 
+/* ── Active card — tighter + CENTERED tile info (Jack: too big, smaller & tighter,
+   centralise). Content centered both ways, smaller min-height, readable text.
+   #page-active prefix wins over the dark-only skin. ── */
+#page-active .ar-zhead{padding:5px 12px 5px}
+#page-active .ar-name{font-size:13px;margin-bottom:3px;line-height:1.28}
+#page-active .ar-chips{gap:5px}
+#page-active .id-chip{font-size:10px;padding:2px 7px}
+#page-active .ar-gc{padding:5px 12px}
+#page-active .ar-gc-big{font-size:14px}
+#page-active .ar-gc-lbl{font-size:9.5px}
+#page-active .ar-gc-sub{font-size:9.5px;margin-top:1px}
+#page-active .ar-zprog{padding:4px 12px}
+#page-active .ar-seg{font-size:9.5px;padding:4px 6px}
+#page-active .ar-workgrid{padding:6px 10px;gap:6px}
+#page-active .ar-tile-panel{padding:6px;display:flex;flex-direction:column}
+#page-active .ar-tile-head{font-size:9.5px;margin-bottom:4px}
+#page-active .ar-money-grid,#page-active .ar-track-grid{gap:5px}
+#page-active .ar-tile-panel .ar-track-grid:last-child{flex:1 1 auto;grid-auto-rows:1fr}
+/* each tile: fill its cell, content centered BOTH ways — no gap, balanced look */
+#page-active .ar-info-tile{padding:4px 8px;min-height:36px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+#page-active .ar-info-tile .ar-info-input{text-align:center}
+#page-active .ar-info-label{font-size:9px}
+#page-active .ar-info-value{font-size:13px;margin-top:1px}
+#page-active .ar-info-value.formula{font-size:11px}
+#page-active .ar-info-sub{font-size:9px;margin-top:1px}
+#page-active .ar-details{padding:5px 12px 6px}
+#page-active .att-rung{padding:3px 8px;font-size:10.5px}
+#page-active .ar-sec-h{font-size:9.5px;margin:5px 0 3px}
+#page-active .ar-foot{padding:5px 11px;gap:6px}
+#page-active .ar-btn{padding:5px 10px;font-size:10.5px}
+#page-active .ar-card{margin-bottom:10px}
+#page-active .ar-statsel{padding:4px 9px;font-size:10.5px}
+
+/* ── Import page — 2-col so the space is used, guide fills the right ── */
+.import-body{max-width:1200px}
+@media(min-width:1000px){
+  .import-body{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:18px;align-items:start}
+}
+.import-main{min-width:0}
+.import-guide{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;position:sticky;top:8px}
+.ig-h{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--text2);margin-bottom:10px}
+.ig-step,.ig-dest{display:flex;gap:10px;margin-bottom:11px;align-items:flex-start}
+.ig-step b,.ig-dest b{display:block;font-size:11.5px;color:var(--text);font-weight:700}
+.ig-step span:not(.ig-n),.ig-dest span:not(.ig-dot){display:block;font-size:10.5px;color:var(--text3);line-height:1.5;margin-top:2px}
+.ig-n{flex:0 0 20px;height:20px;border-radius:50%;background:var(--accent-dim,rgba(96,165,250,.14));border:1px solid var(--accent);color:var(--accent);font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.ig-dot{flex:0 0 9px;height:9px;border-radius:50%;margin-top:4px}
+.ig-div{height:1px;background:var(--border);margin:6px 0 14px}
+.ig-note{margin-top:6px;font-size:10px;color:var(--text3);line-height:1.5;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 10px}
+
 /* ── Overview scroll fix: ONE scroll container for the whole page. ── */
 #page-overview.active{display:block;overflow-y:auto}
 #page-overview .page-body{overflow:visible;flex:none;height:auto}
@@ -1987,8 +2074,17 @@ html:not([data-theme="light"]){
   .ss-header{border-bottom-color:#1c2a3c}
 }
 
-/* ── Settings — modern cards, both themes (colours via vars) ── */
-#page-settings .page-body{max-width:940px}
+/* ── Settings — two-column masonry via CSS columns. The KEY is the page (not the
+   page-body) does the vertical scroll and the page-body is content-height — a
+   height-bounded column container wraps horizontally / overlaps, which is what
+   broke every earlier attempt. ── */
+#page-settings .page-body{max-width:1240px}
+@media(min-width:1080px){
+  #page-settings.page{overflow-y:auto}
+  #page-settings .page-body{flex:0 0 auto;height:auto;min-height:0;overflow:visible;column-count:2;column-gap:16px}
+  #page-settings .page-body>h2{column-span:all}
+  #page-settings .settings-section{break-inside:avoid;-webkit-column-break-inside:avoid;page-break-inside:avoid;margin:0 0 14px;display:inline-block;width:100%}
+}
 .settings-section{border-radius:14px;border:1px solid var(--border2);background:linear-gradient(180deg,rgba(148,163,184,.05),rgba(148,163,184,.015));box-shadow:0 14px 34px -28px rgba(0,0,0,.55);transition:border-color .15s}
 .ss-header{background:transparent;border-bottom:1px solid var(--border);padding:12px 16px 10px;position:relative}
 .ss-header::before{content:'';position:absolute;left:0;top:12px;bottom:10px;width:3px;border-radius:3px;background:var(--accent)}
@@ -2096,7 +2192,7 @@ html:not([data-theme="light"]){
       <div class="sf-mark">SF</div>
       <div class="sb-logo-text">
         <div class="name">Reimbursements</div>
-        <div class="sub"><span>Re-evaluation tracker</span></div>
+        <div class="sub"><span>Re-evaluation tracker</span> <span class="build-tag" id="build-tag" title="App build — if this doesn't match the latest, you're on an old file">v?</span></div>
       </div>
     </div>
     <button class="sb-toggle" onclick="toggleSidebar()" title="Collapse sidebar">‹</button>
@@ -2314,6 +2410,7 @@ html:not([data-theme="light"]){
       </div>
     </div>
     <div class="ar-tagbar" id="active-tags"></div>
+    <div id="active-deadline-banner"></div>
     <div class="tbl-wrap">
       <div class="ar-list" id="tbl-active"></div>
     </div>
@@ -2357,11 +2454,14 @@ html:not([data-theme="light"]){
       </div>
       <div class="cg-wrap">
         <div class="cg-left">
-          <div class="f">
-            <label>Select Reimbursement Record</label>
-            <select class="fb-select" id="cg-record" onchange="cgUpdate()" style="width:100%">
-              <option value="">Choose record…</option>
-            </select>
+          <div class="f cg-pick-head">
+            <label>Find a claim to build a case for</label>
+            <div class="fb-search cg-search" id="cg-search-wrap">
+              <svg class="fb-search-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input class="fb-input" id="cg-search" placeholder="Search product, ASIN, SKU or reimbursement ID…" oninput="renderCaseGen()" onkeydown="if(event.key==='Escape')cgClearSearch()">
+              <button class="fb-search-x" id="cg-search-x" onclick="cgClearSearch()" title="Clear">✕</button>
+            </div>
+            <select id="cg-record" onchange="cgUpdate()" style="display:none"><option value="">Choose record…</option></select>
           </div>
           <div id="cg-quickpick" class="cg-quickpick"></div>
           <div id="cg-record-info" style="display:none">
@@ -2430,31 +2530,46 @@ html:not([data-theme="light"]){
           </div>
         </div>
       </div>
+      <div id="cg-recent" class="cg-recent"></div>
     </div>
   </div>
 
   <!-- IMPORT -->
   <div class="page" id="page-import">
-    <div class="page-body">
-      <h2 style="font-size:12px;font-weight:700;margin-bottom:6px">Import SellerFuse CSV</h2>
-      <p style="font-size:11.5px;color:var(--text2);margin-bottom:14px;line-height:1.6">
-        Import your monthly SellerFuse reimbursement export. Each month is treated as a separate batch — duplicate imports for the same period are blocked. Import on the 5th of each month for the previous month's data.
-      </p>
-      <div class="import-download-card">
-        <div><b>Need the GitHub / Mac file?</b><span>Downloads a standalone HTML copy to your browser Downloads folder.</span></div>
-        <button class="btn btn-sec" onclick="downloadHtmlApp()">⤓ Download HTML file</button>
+    <div class="page-body import-body">
+      <div class="import-main">
+        <h2 style="font-size:12px;font-weight:700;margin-bottom:6px">Import SellerFuse CSV</h2>
+        <p style="font-size:11.5px;color:var(--text2);margin-bottom:14px;line-height:1.6">
+          Import your monthly SellerFuse reimbursement export. Each month is treated as a separate batch — duplicate imports for the same period are blocked. Import on the 5th of each month for the previous month's data.
+        </p>
+        <div class="import-download-card">
+          <div><b>Need the GitHub / Mac file?</b><span>Downloads a standalone HTML copy to your browser Downloads folder.</span></div>
+          <button class="btn btn-sec" onclick="downloadHtmlApp()">⤓ Download HTML file</button>
+        </div>
+        <label class="import-zone" id="drop-zone">
+          <input type="file" id="csv-input" accept=".csv,.pdf" onchange="handleImport(this)">
+          <div style="font-size:17px;margin-bottom:10px">📂</div>
+          <div style="font-size:12px;font-weight:600">Drop CSV or PDF here or click to browse</div>
+          <div style="font-size:11px;margin-top:5px;color:var(--text3)">SellerFuse CSV export (recommended) · or the PDF report — both import & self-verify</div>
+        </label>
+        <div id="import-result" style="margin-top:12px"></div>
+        <div id="import-preview" class="import-preview"></div>
+        <h3 style="font-size:12px;font-weight:600;margin:18px 0 8px;color:var(--text2)">Import Batches</h3>
+        <div id="batch-list" class="batch-list"></div>
+        <div id="import-stats" style="margin-top:0"></div>
       </div>
-      <label class="import-zone" id="drop-zone">
-        <input type="file" id="csv-input" accept=".csv,.pdf" onchange="handleImport(this)">
-        <div style="font-size:17px;margin-bottom:10px">📂</div>
-        <div style="font-size:12px;font-weight:600">Drop CSV or PDF here or click to browse</div>
-        <div style="font-size:11px;margin-top:5px;color:var(--text3)">SellerFuse CSV export (recommended) · or the PDF report — both import & self-verify</div>
-      </label>
-      <div id="import-result" style="margin-top:12px"></div>
-      <div id="import-preview" class="import-preview"></div>
-      <h3 style="font-size:12px;font-weight:600;margin:18px 0 8px;color:var(--text2)">Import Batches</h3>
-      <div id="batch-list" class="batch-list"></div>
-      <div id="import-stats" style="margin-top:0"></div>
+      <aside class="import-guide">
+        <div class="ig-h">How import works</div>
+        <div class="ig-step"><span class="ig-n">1</span><div><b>Drop the file</b><span>SellerFuse CSV (best) or the PDF report — above.</span></div></div>
+        <div class="ig-step"><span class="ig-n">2</span><div><b>Check the preview</b><span>The reconcile panel checks the row totals match the file's own summary to the penny before anything imports.</span></div></div>
+        <div class="ig-step"><span class="ig-n">3</span><div><b>Confirm</b><span>Rows sort themselves automatically — nothing else to do.</span></div></div>
+        <div class="ig-div"></div>
+        <div class="ig-h">Where rows land</div>
+        <div class="ig-dest"><span class="ig-dot" style="background:#c084fc"></span><div><b>Review Queue</b><span>Loss-making claims to decide on.</span></div></div>
+        <div class="ig-dest"><span class="ig-dot" style="background:var(--red)"></span><div><b>Import Errors</b><span>Rows with no readable COG — blocked until fixed.</span></div></div>
+        <div class="ig-dest"><span class="ig-dot" style="background:var(--green)"></span><div><b>History</b><span>Reversals &amp; adjustment credits, filed automatically.</span></div></div>
+        <div class="ig-note">Duplicate months are blocked, so re-importing the same file is safe.</div>
+      </aside>
     </div>
   </div>
 
@@ -3226,7 +3341,7 @@ function updateBadges() {
   const ba=document.getElementById('badge-actions'); if(ba) ba.textContent = actionCount;
   // Active count = the inbox only: working cases still needing action. Cases waiting
   // for reimbursement have peeled off to their own tab and don't count here.
-  const bac=document.getElementById('badge-active'); if(bac) bac.textContent = activeRows.filter(r=>!isReimbPending(r)).length;
+  const bac=document.getElementById('badge-active'); if(bac) bac.textContent = activeRows.filter(inActiveInbox).length;
   const bh=document.getElementById('badge-history'); if(bh) bh.textContent = archived.length;
 }
 
@@ -3371,14 +3486,15 @@ function renderOverview() {
   // process flow nodes — Active shows the inbox (excludes reimb-pending, which
   // has its own node) so it matches the sidebar Active count.
   const reimbPendingCount = active.filter(isReimbPending).length;
-  const activeCount = active.filter(r=>!isReimbPending(r)).length;
+  const activeCount = active.filter(inActiveInbox).length;   // inbox = unprocessed only
+  // Each node jumps to exactly what it represents (filtered where relevant).
   const flow=[
-    {k:'errors',label:'Import errors',n:errCount,col:'var(--red)',nav:'errors'},
-    {k:'review',label:'Review queue',n:reviewItems.length,col:'#c084fc',nav:'triage'},
-    {k:'active',label:'Active — working',n:activeCount,col:'var(--amber)',nav:'active'},
-    {k:'cases',label:'Cases open',n:casesOpen,col:'#38bdf8',nav:'active'},
-    {k:'reimbpend',label:'Reimb pending',n:reimbPendingCount,col:'#22d3ee',nav:'active'},
-    {k:'done',label:'Reimbursed',n:reimbursed.length,col:'var(--green)',nav:'history'},
+    {k:'errors',label:'Import errors',n:errCount,col:'var(--red)',act:"nav('errors')"},
+    {k:'review',label:'Review queue',n:reviewItems.length,col:'#c084fc',act:"nav('triage')"},
+    {k:'active',label:'Active — to process',n:activeCount,col:'var(--amber)',act:"nav('active');setActiveTag('all')"},
+    {k:'cases',label:'Cases open',n:casesOpen,col:'#38bdf8',act:"nav('active');setActiveTag('caseopen')"},
+    {k:'reimbpend',label:'Reimb pending',n:reimbPendingCount,col:'#22d3ee',act:"nav('active');setActiveTag('reimbpending')"},
+    {k:'done',label:'Reimbursed',n:reimbursed.length,col:'var(--green)',act:"nav('history')"},
   ];
 
   // ── Active inbox "shape" — breaks the 56 into what kind of work it is, so the
@@ -3405,7 +3521,7 @@ function renderOverview() {
     ['fixcog', _shape.fixcog, 'blocked · fix COG', 'var(--red)', "nav('errors')"],
   ].filter(c=>c[1]>0);
   const shapeHtml = _shapeChips.length ? `<div class="ov2-shape">
-      <span class="ov2-shape-h">Active inbox</span>
+      <span class="ov2-shape-h">Workload by status</span>
       ${_shapeChips.map(c=>`<button class="ov2-shape-chip" style="--sc:${c[3]}" onclick="${c[4]}"><b>${c[1]}</b> ${c[2]}</button>`).join('')}
     </div>` : '';
 
@@ -3472,7 +3588,7 @@ function renderOverview() {
 
     <div class="ov2-flow">
       ${flow.map((s,i)=>`
-        <div class="ov2-node" onclick="nav('${s.nav}')">
+        <div class="ov2-node" onclick="${s.act}" title="Go to ${s.label}">
           <div class="ov2-node-n" style="color:${s.n?s.col:'var(--text3)'}">${s.n}</div>
           <div class="ov2-node-label">${s.label}</div>
           <div class="ov2-node-bar" style="background:${s.n?s.col:'var(--border2)'}"></div>
@@ -4469,9 +4585,6 @@ function renderActive() {
     }
     return true;
   });
-  // live match count in the search box
-  const _sn = document.getElementById('srch-n');
-  if (_sn) _sn.textContent = srch ? (rows.length+' hit'+(rows.length===1?'':'s')) : '';
 
   // ── status tag chips (removal-tracker style) ──
   const todayStr = new Date().toISOString().split('T')[0];
@@ -4481,7 +4594,10 @@ function renderActive() {
   const tagPred = {
     // "All" = the Active inbox: everything still needing action. Reimb-pending
     // cases have peeled off to their own tab and are NOT part of the inbox.
-    all: r=>!isReimbPending(r),
+    // "All" = the inbox: ONLY unprocessed cases. Any status set (denied, approved,
+    // under review, docs, case open, reimb pending, escalated) moves the case out
+    // of All into its status tab — Sarah's inbox-to-zero workflow.
+    all: r=>inActiveInbox(r),
     overdue: r=>{ const rd=ann(r.reimb_id).review_date; return rd && rd<todayStr && ['pending','review','reduced','denied'].includes(mscOf(r)); },
     submitted: r=>mscOf(r)==='pending',
     review: r=>mscOf(r)==='review',
@@ -4503,6 +4619,32 @@ function renderActive() {
     }).join('');
   }
   if (tagPred[activeTag]) rows = rows.filter(tagPred[activeTag]);
+  // live match count — measured AFTER the tab filter so it matches the cards shown
+  const _sn = document.getElementById('srch-n');
+  if (_sn) _sn.textContent = srch ? (rows.length+' hit'+(rows.length===1?'':'s')) : '';
+
+  // ── Deadline warning banner: any working claim (whatever tab it lives in) with
+  //    the 60-day window closing gets shouted about at the top — losing the window
+  //    IS losing the money. Independent of search/filters on purpose. ──
+  const _dbEl = document.getElementById('active-deadline-banner');
+  if (_dbEl) {
+    const RISK_D2 = settings.deadline_risk_days||7;
+    const crit = records.filter(r=>{
+      const a=ann(r.reimb_id);
+      if (a.workflow_status==='triage' || r.is_reversal==='Yes' || (a.outcome||'')==='reimbursed') return false;
+      if (isReimbPending(r)) return false;                 // already paid — window irrelevant
+      const dl=daysLeft60(r.date);
+      return dl<=RISK_D2 && computedNet(r)<-0.005;
+    }).sort((a,b)=>daysLeft60(a.date)-daysLeft60(b.date));
+    if (crit.length) {
+      const atRisk = crit.reduce((s,r)=>s+Math.abs(Math.min(0,computedNet(r))),0);
+      const chips = crit.slice(0,4).map(r=>{
+        const dl=daysLeft60(r.date);
+        return '<button class="adb-chip" onclick="openRecord(\''+String(r.reimb_id).replace(/'/g,"\\'")+'\')"><b>'+(dl<=0?'EXPIRED':dl+'d')+'</b> '+esc((r.product_name||'').substring(0,28))+' · £'+Math.abs(computedNet(r)).toFixed(2)+'</button>';
+      }).join('');
+      _dbEl.innerHTML = '<div class="adb"><span class="adb-t">⚠ '+crit.length+' claim'+(crit.length===1?'':'s')+' — window closing in ≤'+RISK_D2+' days · £'+atRisk.toFixed(2)+' at risk</span>'+chips+(crit.length>4?'<span class="adb-more">+'+(crit.length-4)+' more</span>':'')+'</div>';
+    } else _dbEl.innerHTML = '';
+  }
   // Priority order (work top-to-bottom): blocked → overdue/deadline → your-move
   // (open case, upload docs, due today) → actionable-now (check MSC) → then the
   // "waiting" states you can't act on yet (denied cooling off, under review,
@@ -4549,9 +4691,12 @@ function renderActive() {
 
   const _aw = document.querySelector('#page-active .tbl-wrap');
   const _ast = _aw ? _aw.scrollTop : 0;
+  const _emptyMsg = (activeTag==='all' && !srch && !fMonth && !fReason && !fMsc && !fLoss)
+    ? '<div style="text-align:center;padding:48px"><div style="font-size:16px;font-weight:800;color:var(--green)">✓ Inbox clear — 0 to process</div><div style="font-size:12px;color:var(--text3);margin-top:8px">Every case has been processed and moved to its status tab above.<br>Check the tabs (or the Overview) for what\'s waiting on Amazon.</div></div>'
+    : '<div style="text-align:center;padding:48px;color:var(--text3)">No active reimbursements match these filters.</div>';
   document.getElementById('tbl-active').innerHTML = rows.length
     ? rows.map(r => buildActiveCard(r)).join('')
-    : '<div style="text-align:center;padding:48px;color:var(--text3)">No active reimbursements match these filters.</div>';
+    : _emptyMsg;
   if (_aw) requestAnimationFrame(()=>{ _aw.scrollTop = _ast; });
 }
 
@@ -4868,11 +5013,16 @@ function arStatus(id, val){
     setAnn(id,{workflow_status:'reimb_pending'});
   } else if (val==='caseopen'){
     const a=ann(id);
-    setAnn(id,{msc_status:'approved', case_status:'open', case_opened_date:a.case_opened_date||new Date().toISOString().split('T')[0]});
+    // workflow_status case_open is what vaCaseOpen() reads — without it the card
+    // would land under "MSC approved" instead of the Case / Claim tab.
+    setAnn(id,{msc_status:'approved', case_status:'open', workflow_status:'case_open', case_opened_date:a.case_opened_date||new Date().toISOString().split('T')[0]});
   } else {
     setAnn(id,{msc_status: val==='needs'?'none':val});
   }
   renderActive(); renderActions(); updateBadges();
+  // The card leaves the "All" inbox on any status — tell Sarah where it went.
+  const TAB_LABEL = {needs:'back in the Active inbox', review:'MSC submitted', denied:'MSC denied', approved:'MSC approved', reduced:'Reduced MSC approved', docs:'Needs document', caseopen:'Case / Claim', reimbpending:'Reimbursement pending'};
+  if (TAB_LABEL[val]) toast(val==='needs' ? 'Moved '+TAB_LABEL[val] : 'Processed — now under “'+TAB_LABEL[val]+'”');
 }
 
 // One-tap card actions — reuse the same date/attempt logic as the modal, no dialog.
@@ -5481,29 +5631,68 @@ function exportHistoryCsv() {
   toast('History exported ✓');
 }
 
+function cgClearSearch(){ const s=document.getElementById('cg-search'); if(s){s.value='';} const w=document.getElementById('cg-search-wrap'); if(w)w.classList.remove('has-val'); renderCaseGen(); const s2=document.getElementById('cg-search'); if(s2)s2.focus(); }
 function renderCaseGen() {
   const sel = document.getElementById('cg-record');
   const cur = sel.value;
-  const eligible = records.filter(r=>r.is_reversal!=='Yes' && ann(r.reimb_id).workflow_status !== 'triage' && computedNet(r) < 0)
+  const q = (document.getElementById('cg-search')?.value||'').toLowerCase().trim();
+  const wrap = document.getElementById('cg-search-wrap'); if (wrap) wrap.classList.toggle('has-val', !!q);
+  const allEligible = records.filter(r=>r.is_reversal!=='Yes' && ann(r.reimb_id).workflow_status !== 'triage' && computedNet(r) < 0)
       .sort((a,b)=>computedNet(a)-computedNet(b));
+  const eligible = q ? allEligible.filter(r=>((r.product_name||'')+(r.asin||'')+(r.sku||'')+(r.fnsku||'')+r.reimb_id+(r.reimb_id_real||'')).toLowerCase().includes(q)) : allEligible;
   sel.innerHTML = '<option value="">Choose record…</option>' +
     eligible.map(r=>'<option value="'+r.reimb_id+'">['+(r.reimb_id_real||r.reimb_id)+'] '+r.product_name.substring(0,50)+' — -£'+Math.abs(computedNet(r)).toFixed(2)+'</option>')
       .join('');
   if (cur) sel.value = cur;
-  // Quick-pick panel — top loss-making claims, one click to load
+  // Quick-pick panel — ALL loss-making claims (scrollable), biggest first, so the
+  // list fills the column instead of stopping at 8 and leaving dead space.
   const qp = document.getElementById('cg-quickpick');
   if (qp) {
     if (!eligible.length) {
-      qp.innerHTML = '<div class="cg-qp-empty">No loss-making claims to build a case for. Work the Review Queue first, or import a month.</div>';
+      qp.innerHTML = q
+        ? '<div class="cg-qp-empty">No claims match “'+esc(q)+'”. <button class="cg-qp-clear" onclick="cgClearSearch()">Clear search</button></div>'
+        : '<div class="cg-qp-empty">No loss-making claims to build a case for. Work the Review Queue first, or import a month.</div>';
     } else {
-      qp.innerHTML = '<div class="cg-qp-h">Or pick a claim to chase — biggest shortfalls first</div>' +
-        eligible.slice(0,8).map((r,i)=>
-          '<button class="cg-qp" onclick="cgPick(\''+String(r.reimb_id).replace(/'/g,"\\'")+'\')">'+
+      const cur2 = document.getElementById('cg-record').value;
+      qp.innerHTML = '<div class="cg-qp-h">'+(q?eligible.length+' match'+(eligible.length===1?'':'es')+' for “'+esc(q)+'”':'Claims to chase — biggest shortfalls first ('+eligible.length+')')+'</div>'
+        + '<div class="cg-qp-list">' + eligible.map((r,i)=>{
+          const a=ann(r.reimb_id);
+          const msc=Number(a.msc_amount||0);
+          const target=msc>0?msc:claimCog(r);
+          const src=msc>0?'MSC':'COG';
+          const on = r.reimb_id===cur2;
+          return '<button class="cg-qp'+(on?' on':'')+'" onclick="cgPick(\''+String(r.reimb_id).replace(/'/g,"\\'")+'\')">'+
             '<span class="cg-qp-rank">'+(i+1)+'</span>'+
-            '<span class="cg-qp-main"><span class="cg-qp-name">'+esc(r.product_name.substring(0,44))+'</span>'+
-            '<span class="cg-qp-sub">'+esc(r.asin||'')+' · '+reasonPill(r.reason)+'</span></span>'+
+            '<span class="cg-qp-main"><span class="cg-qp-name">'+esc(r.product_name.substring(0,46))+'</span>'+
+            '<span class="cg-qp-sub">'+esc(r.asin||'')+' · '+reasonPill(r.reason)+' · claims £'+target.toFixed(2)+' ('+src+')</span></span>'+
             '<span class="cg-qp-amt">-£'+Math.abs(computedNet(r)).toFixed(2)+'</span>'+
-          '</button>').join('');
+          '</button>';
+        }).join('') + '</div>';
+    }
+  }
+  // "Cases you've opened" — records with a case logged, so the VA can track her
+  // recent work and jump back to paste the reimbursement when it lands.
+  const recentEl = document.getElementById('cg-recent');
+  if (recentEl) {
+    const opened = records.filter(r=>{const a=ann(r.reimb_id); return a.new_case_id || (a.case_attempts&&a.case_attempts.length);})
+      .sort((a,b)=>String(ann(b.reimb_id).case_opened_date||'').localeCompare(String(ann(a.reimb_id).case_opened_date||'')));
+    if (opened.length) {
+      recentEl.innerHTML = '<div class="cg-recent-h">Cases you\'ve opened <span>'+opened.length+'</span></div>'
+        + '<div class="cg-recent-grid">' + opened.slice(0,12).map(r=>{
+          const a=ann(r.reimb_id);
+          const cid=a.new_case_id||(a.case_attempts&&a.case_attempts.length?a.case_attempts[a.case_attempts.length-1].case_id:'');
+          const paid=isReimbPending(r);
+          const stCol=paid?'#22d3ee':'#c084fc';
+          const stLbl=paid?'Reimb pending':'Case open';
+          return '<div class="cg-recent-card" onclick="openRecord(\''+String(r.reimb_id).replace(/'/g,"\\'")+'\')">'+
+            '<div class="cg-recent-name">'+esc((r.product_name||'').substring(0,40))+'</div>'+
+            '<div class="cg-recent-meta"><span class="cg-recent-id">'+esc(cid||'no ID')+'</span>'+
+              '<span class="cg-recent-st" style="color:'+stCol+';border-color:'+stCol+'">'+stLbl+'</span></div>'+
+            '<div class="cg-recent-sub">'+esc(a.case_opened_date?('opened '+fmtDate(a.case_opened_date)):'')+' · asked £'+Math.abs(computedNet(r)).toFixed(2)+'</div>'+
+          '</div>';
+        }).join('') + '</div>';
+    } else {
+      recentEl.innerHTML = '';
     }
   }
   cgUpdate();
@@ -5514,8 +5703,27 @@ function cgPick(id){
   document.getElementById('cg-record-info').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
-const CG_EMPTY_HTML = '<div class="cg-empty-in"><div class="cg-empty-ico">📋</div><div class="cg-empty-t">Pick a record to build its case</div><div class="cg-empty-s">Choose from the list on the left. The app works out the claim value, checks it\'s worth opening, and writes the message.</div></div>';
-function cgShowEmpty(){ const el=document.getElementById('cg-preview'); if(el){ el.classList.add('cg-empty'); el.innerHTML=CG_EMPTY_HTML; } }
+function cgEmptyHtml(){
+  // Live workload summary + the 4-step flow, so the empty panel is useful, not a void.
+  const elig = records.filter(r=>r.is_reversal!=='Yes' && ann(r.reimb_id).workflow_status!=='triage' && computedNet(r)<0);
+  const totalShort = elig.reduce((s,r)=>s+Math.abs(computedNet(r)),0);
+  const opened = records.filter(r=>{const a=ann(r.reimb_id);return a.new_case_id||(a.case_attempts&&a.case_attempts.length);}).length;
+  const biggest = elig.slice().sort((a,b)=>computedNet(a)-computedNet(b))[0];
+  const step=(n,t)=>'<div class="cg-step"><span class="cg-step-n">'+n+'</span><span>'+t+'</span></div>';
+  return '<div class="cg-empty-in">'
+    + '<div class="cg-empty-ico">📋</div>'
+    + '<div class="cg-empty-t">Pick a claim to build its case</div>'
+    + '<div class="cg-empty-s">Choose from the list on the left — the app decides the claim value, checks it’s worth opening, and writes the message.</div>'
+    + (elig.length?'<div class="cg-empty-stats">'
+        + '<div class="cg-es"><b>'+elig.length+'</b><span>claims to chase</span></div>'
+        + '<div class="cg-es"><b>£'+totalShort.toFixed(0)+'</b><span>total shortfall</span></div>'
+        + '<div class="cg-es"><b>'+opened+'</b><span>cases open</span></div>'
+      +'</div>':'')
+    + (biggest?'<button class="cg-empty-cta" onclick="cgPick(\''+String(biggest.reimb_id).replace(/\'/g,"\\'")+'\')">Start with the biggest — '+esc((biggest.product_name||'').substring(0,26))+' · £'+Math.abs(computedNet(biggest)).toFixed(2)+' →</button>':'')
+    + '<div class="cg-steps">'+step(1,'Pick a claim')+step(2,'Check the readiness box')+step(3,'Copy + open Seller Central')+step(4,'Paste the new Case ID back')+'</div>'
+    + '</div>';
+}
+function cgShowEmpty(){ const el=document.getElementById('cg-preview'); if(el){ el.classList.add('cg-empty'); el.innerHTML=cgEmptyHtml(); } }
 function cgShowText(t){ const el=document.getElementById('cg-preview'); if(el){ el.classList.remove('cg-empty'); el.textContent=t; } }
 function cgUpdate() {
   const id = document.getElementById('cg-record').value;
@@ -6219,11 +6427,16 @@ function confirmImportPreview() {
   skipped = parsed.length - selected.length;
   batches.push({period, label:period, count:added, errorsAdded, reversalsAdded, adjustmentsFiled, importedCount:added+errorsAdded+reversalsAdded+adjustmentsFiled, dupes, skipped, date:new Date().toISOString(), id:batchId});
   save();
-  document.getElementById('import-result').innerHTML = '<div class="ip-ok">✅ Import complete — <strong>'+added+' to Review Queue</strong>, <strong>'+errorsAdded+' blocked for COG fix</strong>, <strong>'+adjustmentsFiled+' adjustment credits filed/linked</strong>, <strong>'+reversalsAdded+' reversals filed to History</strong>. '+dupes+' duplicates skipped. '+orphansSkipped+' orphan credits (no product) skipped. '+skipped+' rows not selected.</div>';
+  document.getElementById('import-result').innerHTML = '<div class="ip-ok">✅ Import complete — <strong>'+added+' to Review Queue</strong>, <strong>'+errorsAdded+' blocked for COG fix</strong>, <strong>'+adjustmentsFiled+' adjustment credits filed/linked</strong>, <strong>'+reversalsAdded+' reversals filed to History</strong>. '+dupes+' duplicates skipped. '+orphansSkipped+' orphan credits (no product) skipped. '+skipped+' rows not selected.'
+    + '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">'
+    + (added?'<button class="btn btn-primary" style="padding:5px 12px;font-size:11px" onclick="nav(\'triage\')">Go to Review Queue ('+added+') →</button>':'')
+    + (errorsAdded?'<button class="btn btn-red" style="padding:5px 12px;font-size:11px" onclick="nav(\'errors\')">Fix COG errors ('+errorsAdded+') →</button>':'')
+    + '</div></div>';
   cancelImportPreview(false);
   renderImport(); renderErrors(); renderTriage(); renderActive(); renderHistory(); renderCaseGen(); updateBadges();
   toast('Imported '+added+' to Review · '+errorsAdded+' need COG · '+adjustmentsFiled+' adjustments linked/filed');
-  nav(errorsAdded ? 'errors' : 'triage');
+  // Stay on the Import page (with the summary + next-step buttons above) instead
+  // of auto-jumping to another page — the VA chooses where to go next.
 }
 
 function cancelImportPreview(clearMsg=true) {
@@ -7778,6 +7991,19 @@ function isReimbPending(r) {
   if ((a.outcome||'')==='reimbursed') return false;
   return a.workflow_status==='reimb_pending' || !!String(a.new_reimb_id||'').trim();
 }
+// ── Sarah's inbox model (Jack-approved): the Active "All" list holds ONLY cases
+// that still need their FIRST processing. The moment a case gets ANY status —
+// MSC under review / denied / approved / reduced / docs, a case opened, reimb
+// pending, escalated — it leaves "All" and lives only under its status tab.
+// Active count ticks down as she works and hits 0 when everything is processed.
+function inActiveInbox(r) {
+  const a = ann(r.reimb_id);
+  if ((a.outcome||'')==='reimbursed') return false;
+  if (isReimbPending(r)) return false;
+  if (vaCaseOpen(r)) return false;
+  if (a.workflow_status==='escalated') return false;
+  return (a.msc_status||'none')==='none';   // no MSC status logged yet = unprocessed
+}
 function workflowPill(r) {
   if (r.is_adjustment==='Yes') return '<span class="workflow-pill ws-done">Adjustment credit</span>';
   if (!r.actual_cost || Number(r.actual_cost)<=0) return '<span class="workflow-pill ws-cog">COG Missing</span>';
@@ -8352,24 +8578,34 @@ function updateLastBackup(){
   el.style.color = days>=7 ? 'var(--amber)' : 'var(--text)';
 }
 
+// ── Build stamp: bump on every ship. Visible in the sidebar so anyone can tell
+// at a glance whether the live site / their browser is running the latest file.
+const APP_BUILD = 'v14.8 · inbox';
+(function(){ const b=document.getElementById('build-tag'); if(b) b.textContent=APP_BUILD; console.log('SF Reimbursements build', APP_BUILD); })();
 loadAll();
 applyDensity();
 applySafeguards();
 updateLastBackup();
 let _seeded=false;
 if (SAMPLE_MODE && !records.length && !importErrors.length && !archived.length) { seedSampleData(); _seeded=true; }
-if (!records.length && !importErrors.length && !archived.length) { nav('import'); }
-else if (_seeded) { nav(importErrors.length ? 'errors' : 'triage'); }
-else { nav('actions'); }
+const _hasData = () => !!(records.length || importErrors.length || archived.length);
+// Default landing is ALWAYS the Overview. We only fall back to Import when we
+// KNOW there's no data — and for a cloud-backed app that's AFTER the pull, not
+// on the empty first paint (the old code nav'd to Import here and never came back).
+if (_seeded) { nav(importErrors.length ? 'errors' : 'triage'); }
+else if (!cloudEnabled() && !_hasData()) { nav('import'); }
+else { nav('overview'); }
 
 // Cloud hydrate (no-op unless configured): pull remote, then re-render if it changed anything.
 initCloud();
 if (cloudEnabled()) {
   cloudPull().then(applied => {
-    if (applied) {
-      updateBadges();
-      renderAllViews();
-      if (!records.length && !importErrors.length && !archived.length) nav('import');
+    if (applied) { updateBadges(); renderAllViews(); }
+    const cur = document.querySelector('.page.active');
+    if (!_hasData()) {
+      nav('import');                        // genuinely empty after the pull → Import
+    } else if (cur && cur.id === 'page-import') {
+      nav('overview');                      // data arrived while we were on Import → go home
     }
   });
 }
