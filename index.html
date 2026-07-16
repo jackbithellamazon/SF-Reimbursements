@@ -4563,10 +4563,16 @@ function renderActive() {
   const fLoss = document.getElementById('f-loss').value;
   const hideRev = document.getElementById('f-hide-rev').checked;
 
-  let rows = records.filter(r => {
+  // `base` = every working case, UNfiltered — the tag counts come from this so the
+  // "All" pill ALWAYS equals the sidebar Active badge (Sarah: the two must match,
+  // whatever search/month filters are doing to the list below).
+  const base = records.filter(r => {
     const wf = ann(r.reimb_id).workflow_status || 'triage';
     if (wf === 'triage') return false;
     if (hideRev && r.is_reversal === 'Yes') return false;
+    return true;
+  });
+  let rows = base.filter(r => {
     if (fMonth && !r.date.startsWith(fMonth)) return false;
     if (fReason && r.reason !== fReason) return false;
     if (fMsc) {
@@ -4613,15 +4619,19 @@ function renderActive() {
   const AR_TAGS = [['all','All'],['overdue','Overdue re-updates'],['submitted','MSC submitted'],['review','MSC under review'],['docs','Needs document'],['approved','MSC approved'],['reduced','Reduced MSC approved'],['denied','MSC denied'],['caseopen','Case / Claim'],['reimbpending','Reimbursement pending'],['escalated','Escalated to Jack']];
   const tagEl = document.getElementById('active-tags');
   if (tagEl) {
+    // Counts from the GLOBAL working set (base), never the filtered list — so
+    // "All 46" always equals the sidebar's Active 46, no matter what's searched.
     tagEl.innerHTML = AR_TAGS.map(([k,label])=>{
-      const n = rows.filter(tagPred[k]).length;
+      const n = base.filter(tagPred[k]).length;
       return `<button class="ar-tag ${activeTag===k?'on':''}" onclick="setActiveTag('${k}')">${label}<span class="ar-tag-n">${n}</span></button>`;
     }).join('');
   }
-  if (tagPred[activeTag]) rows = rows.filter(tagPred[activeTag]);
-  // live match count — measured AFTER the tab filter so it matches the cards shown
+  // A search hunts ACROSS every status — if Sarah searches an FNSKU that's already
+  // been processed, it must still be found (with its card showing its status),
+  // not vanish because it left the current tab. No search → normal tab filter.
+  if (!srch && tagPred[activeTag]) rows = rows.filter(tagPred[activeTag]);
   const _sn = document.getElementById('srch-n');
-  if (_sn) _sn.textContent = srch ? (rows.length+' hit'+(rows.length===1?'':'s')) : '';
+  if (_sn) _sn.textContent = srch ? (rows.length+' hit'+(rows.length===1?'':'s')+' · all statuses') : '';
 
   // ── Deadline warning banner: any working claim (whatever tab it lives in) with
   //    the 60-day window closing gets shouted about at the top — losing the window
@@ -8580,7 +8590,7 @@ function updateLastBackup(){
 
 // ── Build stamp: bump on every ship. Visible in the sidebar so anyone can tell
 // at a glance whether the live site / their browser is running the latest file.
-const APP_BUILD = 'v14.8 · inbox';
+const APP_BUILD = 'v14.9 · search-fix';
 (function(){ const b=document.getElementById('build-tag'); if(b) b.textContent=APP_BUILD; console.log('SF Reimbursements build', APP_BUILD); })();
 loadAll();
 applyDensity();
