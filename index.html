@@ -122,6 +122,10 @@ input:focus,select:focus,textarea:focus,.fb-input:focus,.fb-select:focus{outline
 .adb-chip b{color:var(--red)}
 .adb-chip:hover{border-color:var(--red)}
 .adb-more{font-size:10px;color:var(--text3)}
+/* History: reimbursed-but-no-payout-date hygiene flag */
+.hd-verdict.warn-date{background:var(--amber-dim);border:1px solid color-mix(in srgb,var(--amber) 40%,var(--border));color:var(--text2);margin-top:8px}
+.hv-fix{display:inline-block;background:var(--surface);border:1px solid color-mix(in srgb,var(--amber) 45%,var(--border));color:var(--amber);border-radius:7px;padding:2px 8px;margin:0 2px;font-size:10.5px;font-weight:700;font-family:inherit;cursor:pointer}
+.hv-fix:hover{background:var(--amber);color:#0c0e12}
 .sb-brand{display:flex;align-items:center;gap:10px;min-width:0}
 .sf-mark{
   width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;
@@ -2966,10 +2970,16 @@ async function cloudPull(){
       const rebuilt = remoteRecs.map(row=> (row.raw && typeof row.raw==='object') ? row.raw : row);
       records=[]; archived=[]; importErrors=[];
       rebuilt.forEach(r=>{
-        const st=(annMap[r.reimb_id]||{}).workflow_status;
+        const aa=(annMap[r.reimb_id]||{});
+        const st=aa.workflow_status;
         const noCog=(!r.actual_cost||Number(r.actual_cost)<=0);
         const creditOnly = r.is_adjustment==='Yes' || r.is_reversal==='Yes' || r.cog_source==='ADJUSTMENT_CREDIT' || r.cog_source==='REVERSAL';
-        if(st==='archived'||st==='no_action') archived.push(r);
+        // A finished outcome ALWAYS means History — even if workflow_status was
+        // never stamped 'archived' (the old archiveRecord bug). Heal the stamp so
+        // it syncs back and the case stops boomeranging into Active on reload.
+        const done = (aa.outcome==='reimbursed'||aa.outcome==='loss_taken');
+        if(done && st!=='archived') aa.workflow_status='archived';
+        if(st==='archived'||st==='no_action'||done) archived.push(r);
         else if(noCog && !creditOnly) importErrors.push({...r, import_error:'Missing COG from SKU'});
         else if(creditOnly) archived.push(r);
         else records.push(r);
@@ -5332,6 +5342,15 @@ function renderHistory() {
       (startShort>0?(' — that\u2019s <strong>'+pctBack+'%</strong> of the <strong>£'+startShort.toFixed(2)+'</strong> you were originally short vs COG'):'')+
       '. <strong>'+winPct+'%</strong> of cases improved; <strong>'+reachPct+'%</strong> got back to full COG or better.</div>';
   }
+  // Data hygiene: reimbursed cases missing their payout date — the £ totals are
+  // fine, but month buckets/trends are only exact when the date is set. One-click fix.
+  const _missDate = archived.filter(r=>{const a=ann(r.reimb_id);return (a.outcome||'')==='reimbursed' && !a.reimb_date;});
+  if (_missDate.length) {
+    verdict += '<div class="hd-verdict warn-date">📅 <strong>'+_missDate.length+'</strong> reimbursed case'+(_missDate.length===1?'':'s')+' missing the payout date: '
+      + _missDate.slice(0,3).map(r=>'<button class="hv-fix" onclick="openRecord(\''+String(r.reimb_id).replace(/'/g,"\\'")+'\',true)">'+esc((r.product_name||'').substring(0,26))+'</button>').join(' ')
+      + (_missDate.length>3?' +'+(_missDate.length-3)+' more':'')
+      + ' — open it and fill “Date Reimbursed (final)”.</div>';
+  }
   const respStr = pstats.avgResp!=null ? Math.round(pstats.avgResp)+'d' : '—';
   const attStr = pstats.avgAtt!=null ? pstats.avgAtt.toFixed(1) : '—';
   const discStr = pstats.avgDisc!=null ? Math.round(pstats.avgDisc)+'%' : '—';
@@ -7387,7 +7406,9 @@ function archiveRecord(reimb_id, outcome) {
   if (rr && (!rr.actual_cost || Number(rr.actual_cost)<=0)) { toast('COG required before moving to History'); return; }
   pushUndo();
   saveRecord(reimb_id);
-  setAnn(reimb_id, {outcome});
+  // workflow_status 'archived' is what cloudPull uses to rebuild History — without
+  // it, an archived case BOOMERANGS back into Active on the next reload/device.
+  setAnn(reimb_id, {outcome, workflow_status:'archived'});
   const idx = records.findIndex(x=>x.reimb_id===reimb_id);
   if (idx !== -1) {
     archived.push(records[idx]);
@@ -8590,8 +8611,18 @@ function updateLastBackup(){
 
 // ── Build stamp: bump on every ship. Visible in the sidebar so anyone can tell
 // at a glance whether the live site / their browser is running the latest file.
-const APP_BUILD = 'v14.9 · search-fix';
+const APP_BUILD = 'v15.1 · polish';
 (function(){ const b=document.getElementById('build-tag'); if(b) b.textContent=APP_BUILD; console.log('SF Reimbursements build', APP_BUILD); })();
+// "/" anywhere on the Active page jumps to the search box (ignored while typing).
+document.addEventListener('keydown', e=>{
+  if (e.key!=='/' || e.metaKey || e.ctrlKey || e.altKey) return;
+  const t=(document.activeElement||{}).tagName;
+  if (t==='INPUT'||t==='TEXTAREA'||t==='SELECT') return;
+  const pg=document.getElementById('page-active');
+  if (!pg || !pg.classList.contains('active')) return;
+  const s=document.getElementById('srch');
+  if (s){ e.preventDefault(); s.focus(); s.select(); }
+});
 loadAll();
 applyDensity();
 applySafeguards();
