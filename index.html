@@ -115,6 +115,16 @@ input:focus,select:focus,textarea:focus,.fb-input:focus,.fb-select:focus{outline
 .sb-logo{padding:12px 12px 13px;border-bottom:1px solid rgba(148,163,184,.13);background:linear-gradient(180deg,rgba(34,201,132,.045),rgba(125,211,252,.02) 64%,transparent)}
 .sb-logo-text{overflow:hidden;min-width:0}
 .build-tag{display:inline-block;margin-left:4px;font-size:8.5px;font-weight:800;letter-spacing:.03em;color:var(--green);background:var(--green-dim);border:1px solid color-mix(in srgb,var(--green) 35%,transparent);border-radius:99px;padding:0 6px;vertical-align:1px}
+/* Stale-build banner — shown when this client is behind the newest build seen in the cloud */
+#stale-banner{position:fixed;top:0;left:0;right:0;z-index:9999;display:flex;align-items:center;gap:14px;padding:9px 16px;background:linear-gradient(90deg,#7a1420,#b02234);color:#fff;font-size:12.5px;box-shadow:0 6px 20px -6px rgba(0,0,0,.6);animation:staleIn .3s ease}
+@keyframes staleIn{from{transform:translateY(-100%)}to{transform:translateY(0)}}
+#stale-banner .sb-warn{font-weight:800;white-space:nowrap}
+#stale-banner .sb-mid{opacity:.9}
+#stale-banner .sb-mid b{color:#ffe08a}
+#stale-banner .sb-reload{margin-left:auto;background:#fff;color:#b02234;border:0;border-radius:8px;padding:5px 14px;font-size:11.5px;font-weight:800;cursor:pointer;font-family:inherit;white-space:nowrap}
+#stale-banner .sb-reload:hover{background:#ffe08a}
+#stale-banner .sb-x{background:transparent;border:0;color:#fff;opacity:.7;cursor:pointer;font-size:14px;padding:2px 4px}
+#stale-banner .sb-x:hover{opacity:1}
 /* Deadline warning banner on Active */
 .adb{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 12px 8px;padding:8px 12px;background:var(--red-dim);border:1px solid color-mix(in srgb,var(--red) 45%,var(--border));border-radius:10px}
 .adb-t{font-size:11.5px;font-weight:800;color:var(--red)}
@@ -297,6 +307,40 @@ input:focus,select:focus,textarea:focus,.fb-input:focus,.fb-select:focus{outline
 .ar-tag.on{background:linear-gradient(135deg,var(--accent),var(--accent2));border-color:transparent;color:#04140d;box-shadow:0 2px 10px -3px var(--ring)}
 .ar-tag-n{font-size:10px;font-weight:700;opacity:.7;background:rgba(255,255,255,.08);border-radius:999px;padding:0 6px;min-width:16px;text-align:center}
 .ar-tag.on .ar-tag-n{background:rgba(0,0,0,.18);opacity:.9}
+.ar-tag-dot{width:7px;height:7px;border-radius:50%;flex:0 0 auto;box-shadow:0 0 0 2px rgba(255,255,255,.05)}
+.ar-tag.on .ar-tag-dot{box-shadow:0 0 0 2px rgba(0,0,0,.14)}
+.ar-tag.zero{opacity:.42}
+.ar-tag.zero:hover{opacity:.8}
+.ar-tag-sep{width:1px;height:16px;align-self:center;background:var(--border2);margin:0 4px;flex:0 0 auto}
+/* running total — "All 0" alone read as an empty pipeline */
+.ar-tag-total{display:inline-flex;align-items:baseline;gap:6px;margin-left:auto;padding:3px 12px;border-radius:99px;border:1px dashed var(--border2);font-size:10.5px;color:var(--text3);white-space:nowrap}
+.ar-tag-total b{font-size:12px;font-weight:800;color:var(--text);font-variant-numeric:tabular-nums}
+.ar-tag-total i{font-style:normal;color:var(--red);font-variant-numeric:tabular-nums}
+#active-tags.searching .ar-tag-total{display:none}
+@keyframes fadeIn{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+/* inbox-clear board: the pipeline at a glance instead of a blank page */
+.ib-board{padding:14px 4px 8px;animation:fadeIn .25s ease}
+.ib-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:16px}
+.ib-tick{flex:0 0 auto;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--green-dim);color:var(--green);font-size:15px;font-weight:800}
+.ib-title{font-size:14.5px;font-weight:800;color:var(--green);letter-spacing:-.01em}
+.ib-sub{font-size:11.5px;color:var(--text3);margin-top:3px;line-height:1.5}
+.ib-sub b{color:var(--text2);font-variant-numeric:tabular-nums}
+.ib-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));gap:9px}
+.ib-tile{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;gap:1px 10px;align-items:center;text-align:left;font-family:inherit;cursor:pointer;padding:11px 13px;border-radius:11px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--c);transition:border-color .12s,transform .12s,background .12s}
+.ib-tile:hover{transform:translateY(-1px);background:var(--surface2);border-color:var(--c)}
+.ib-n{grid-row:1/3;font-size:21px;font-weight:800;color:var(--c);font-variant-numeric:tabular-nums;line-height:1}
+.ib-l{font-size:11px;font-weight:600;color:var(--text2);line-height:1.25}
+.ib-r{font-size:10.5px;color:var(--red);font-variant-numeric:tabular-nums}
+.ib-tile.zero{opacity:.4}
+.ib-tile.zero .ib-n{color:var(--text3)}
+.ib-tile.zero:hover{opacity:.75}
+/* search mode: tabs stand down so a hit doesn't look like it lives under every tag */
+#active-tags.searching .ar-tag{opacity:.34;filter:saturate(.5)}
+#active-tags.searching .ar-tag:hover{opacity:.7}
+.ar-tag-searchnote{flex:1 0 100%;display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px;padding:7px 11px;background:color-mix(in srgb,#7dd3fc 9%,transparent);border:1px solid color-mix(in srgb,#7dd3fc 28%,transparent);border-radius:8px;font-size:11px;color:var(--text2)}
+.ar-tag-searchnote b{color:#7dd3fc}
+.ar-tag-searchnote button{margin-left:auto;font-family:inherit;font-size:10px;font-weight:700;color:#7dd3fc;background:transparent;border:1px solid color-mix(in srgb,#7dd3fc 38%,transparent);border-radius:99px;padding:2px 10px;cursor:pointer}
+.ar-tag-searchnote button:hover{background:color-mix(in srgb,#7dd3fc 16%,transparent)}
 .fb-check{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2);cursor:pointer}
 .fb-check input{accent-color:var(--accent)}
 .fb-sep{width:1px;height:16px;background:var(--border);flex-shrink:0}
@@ -485,6 +529,23 @@ tbody tr:hover .td-copy{border-bottom-color:var(--border2)}
 .ov2-task-amt{font-weight:800;font-variant-numeric:tabular-nums;color:var(--red);font-size:12px;white-space:nowrap}
 .ov2-allclear{padding:24px 8px;text-align:center;color:var(--text3);font-size:12px}
 .ov2-focus-note{margin-top:12px;padding:8px 10px;background:var(--red-dim);border:1px solid color-mix(in srgb,var(--red) 30%,transparent);border-radius:8px;font-size:11px;color:var(--red);cursor:pointer;font-weight:600}
+/* parked / with-Jack — counted, deliberately NOT styled as to-dos */
+.ov2-parked{display:flex;flex-wrap:wrap;gap:7px;margin-top:11px;padding-top:10px;border-top:1px dashed var(--border2)}
+.ov2-parked-chip{display:inline-flex;align-items:center;gap:6px;font-family:inherit;font-size:10.5px;color:var(--text3);background:transparent;border:1px solid var(--border2);border-radius:99px;padding:4px 11px;cursor:pointer;transition:color .12s,border-color .12s}
+.ov2-parked-chip b{color:var(--text2);font-variant-numeric:tabular-nums;font-weight:800}
+.ov2-parked-chip:hover{color:var(--text2);border-color:var(--text3)}
+.ov2-parked-chip.jack{border-color:color-mix(in srgb,#c084fc 32%,transparent)}
+.ov2-parked-chip.jack b{color:#c084fc}
+/* pipeline breakdown — fills the focus panel's dead space with real work */
+.ov2-pipe{margin-top:14px;padding-top:12px;border-top:1px dashed var(--border2)}
+.ov2-pipe-h{font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--text3);margin-bottom:9px}
+.ov2-pipe-h span{float:right;text-transform:none;letter-spacing:0;font-weight:500;opacity:.75}
+.ov2-pipe-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:7px}
+.ov2-pipe-t{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;gap:0 9px;align-items:center;text-align:left;font-family:inherit;cursor:pointer;padding:8px 11px;border-radius:9px;background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--c);transition:transform .12s,border-color .12s}
+.ov2-pipe-t:hover{transform:translateY(-1px);border-color:var(--c)}
+.pt-n{grid-row:1/3;font-size:17px;font-weight:800;color:var(--c);font-variant-numeric:tabular-nums;line-height:1}
+.pt-l{font-size:10.5px;font-weight:600;color:var(--text2);line-height:1.2}
+.pt-r{font-size:9.5px;color:var(--red);font-variant-numeric:tabular-nums}
 .ov2-side{display:flex;flex-direction:column;gap:14px}
 .ov2-side-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .ov2-sstat{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px;cursor:pointer;box-shadow:var(--shadow-sm);transition:border-color .12s,transform .12s}
@@ -1708,6 +1769,16 @@ tbody tr.row-loss:hover,tbody tr.row-profit:hover,tbody tr.row-cog-error:hover{b
 .ar-b-cta{padding:2px 10px;border-radius:var(--rs);border:1px solid var(--rc,var(--accent));background:transparent;color:var(--rc,var(--accent));font-size:9.5px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap}
 .ar-b-cta:hover{background:var(--rc);color:var(--bg)}
 .ar-gc-bar-hot .ar-gc-barfill{animation:pulse 1.4s infinite}
+/* ── v16.0: denser COLLAPSED scan cards — 1-line name, tighter header → ~2x cards per screen ── */
+.ar-card:not(.is-open) .ar-zhead{padding:7px 12px;align-items:center;gap:12px}
+.ar-card:not(.is-open) .ar-name{-webkit-line-clamp:1;font-size:12px;line-height:1.3;margin-bottom:5px;letter-spacing:-.01em}
+.ar-card:not(.is-open) .ar-chips{gap:5px}
+.ar-card:not(.is-open) .id-chip{font-size:9.5px;padding:2px 8px}
+.ar-card:not(.is-open) .ar-bar{padding:6px 12px;min-height:30px}
+#page-active .ar-card:not(.is-open){margin-bottom:7px}
+/* collapsed: tighten the right-hand control stack (reason · status · action) */
+.ar-card:not(.is-open) .ar-tags{gap:4px}
+.ar-card:not(.is-open) .ar-zhead{padding:6px 12px}
 /* status-coloured active rows (left accent + faint tint) */
 #page-active tbody tr.rs-red td:first-child,#page-active tbody tr.rs-amber td:first-child,#page-active tbody tr.rs-blue td:first-child,#page-active tbody tr.rs-purple td:first-child,#page-active tbody tr.rs-green td:first-child,#page-active tbody tr.rs-todo td:first-child{box-shadow:inset 3px 0 0 var(--_rsc)}
 #page-active tbody tr.rs-red{--_rsc:var(--red);background:rgba(224,39,58,.05)}
@@ -1827,6 +1898,19 @@ html:not([data-theme="light"]) {
 .aq-side-h{grid-column:1/-1;margin:4px 0 0;color:#d5dfeb}
 .aq-side .aq-section{margin-bottom:0}
 .aq-side .aq-band{grid-column:1/-1;margin:4px 0 0}
+/* ─── Action Centre dead space ───────────────────────────────────────────────
+   .aq-side is an auto-fit grid, but a watch-list SECTION only ever occupied one
+   ~320px column — so "Waiting on Amazon" rendered as a narrow strip with most of
+   the screen blank. Sections now span the full width and tile their own rows, and
+   the notice cards (review / import errors) sit side-by-side across the top. */
+.aq-side .aq-section{grid-column:1/-1;display:grid;grid-template-columns:repeat(auto-fit,minmax(430px,1fr));gap:0;align-content:start}
+.aq-side .aq-row .aq-name{min-width:0}
+.aq-side .aq-section-head{grid-column:1/-1}
+.aq-side .aq-section:has(.aq-errcard){grid-column:auto;display:block}
+/* the rail is full-width now, so stop hiding the deadline and button labels */
+.aq-side .aq-dl{display:inline-flex}
+.aq-side .aq-cta span{display:inline}
+.aq-side .aq-cta{min-width:auto;padding:6px 12px}
 .aq-row{border-radius:8px;margin:5px 6px;background:rgba(148,163,184,.035);border:1px solid rgba(148,163,184,.11);border-left:3px solid var(--_accent,transparent)}
 .aq-row::before{display:none}
 .aq-row:hover{border-color:rgba(125,211,252,.22)}
@@ -2975,6 +3059,36 @@ function _snapshot(){
 }
 
 // Pull remote state on startup. Returns true if remote data was applied.
+// ── Stale-build guard ──────────────────────────────────────────────────────
+// The recurring "it's still broken" reports have all traced to Sarah running an
+// OLD uploaded file. The app can't know the "latest" on its own, so we piggyback
+// the newest build any client has run onto the shared cloud settings: whoever is
+// on the newest build records it; anyone behind gets an unmissable refresh banner.
+function buildRank(s){ const m=String(s||'').match(/v?(\d+)\.(\d+)/); return m ? (parseInt(m[1],10)*1000 + parseInt(m[2],10)) : 0; }
+function hideStaleBanner(){ const b=document.getElementById('stale-banner'); if(b) b.remove(); }
+function showStaleBanner(latest){
+  if(document.getElementById('stale-banner')) { const l=document.getElementById('stale-latest'); if(l) l.textContent=latest; return; }
+  const isMac = navigator.platform.toLowerCase().includes('mac');
+  const combo = isMac ? '⌘ + Shift + R' : 'Ctrl + Shift + R';
+  const bar=document.createElement('div');
+  bar.id='stale-banner';
+  bar.innerHTML='<span class="sb-warn">⚠️ You’re on an old version</span>'+
+    '<span class="sb-mid">running <b>'+esc(APP_BUILD)+'</b> · latest is <b id="stale-latest">'+esc(latest)+'</b></span>'+
+    '<button class="sb-reload" onclick="location.reload(true)">Hard-refresh ('+combo+')</button>'+
+    '<button class="sb-x" title="Dismiss" onclick="document.getElementById(\'stale-banner\').remove()">✕</button>';
+  document.body.appendChild(bar);
+}
+// Compare the running build against the newest one recorded in cloud settings.
+function checkBuildFreshness(){
+  try{
+    const myRank = buildRank(APP_BUILD);
+    const cloudRank = buildRank(settings.latest_build);
+    if (myRank > cloudRank){ settings.latest_build = APP_BUILD; hideStaleBanner(); cloudPush(); }
+    else if (myRank < cloudRank){ showStaleBanner(settings.latest_build); }
+    else { hideStaleBanner(); }
+  }catch(e){}
+}
+
 async function cloudPull(){
   if (!_cloudReady || !_sb) return false;
   const OWNER = window.SF_CLOUD.workspace || 'sarah';
@@ -3018,6 +3132,7 @@ async function cloudPull(){
       if (typeof reconcileMscStatus === 'function') reconcileMscStatus();
       batches = (bq.data||[]).map(b=>b.meta||b);
       if (sq.data && sq.data.payload) settings = {...settings, ...sq.data.payload};
+      checkBuildFreshness(); // nag anyone running an older uploaded file than the latest seen
       try {
         localStorage.setItem('bdl_reimb_v15_records', JSON.stringify(records));
         localStorage.setItem('bdl_reimb_v15_archived', JSON.stringify(archived));
@@ -3471,22 +3586,48 @@ function renderOverview() {
   const mscPending = active.filter(r=>{const m=ann(r.reimb_id).msc_status;return m==='review'||m==='pending';}).length;
   const needCheck = active.filter(r=>{const m=ann(r.reimb_id).msc_status;return (computedNet(r)<-0.01 && (!m||m==='none'));}).length;
 
-  // Genuinely time-critical / blocking work (NOT the whole review backlog)
+  // ── What earns a place in "Today's focus" ────────────────────────────────
+  // Sarah works tag-by-tag in Active, so anything she has ALREADY categorised must
+  // clear off Overview ("can we clear this once they moved to a different tag?").
+  // Only work she can genuinely act on TODAY survives:
+  //   · claim window closing        — kept deliberately (the Samsung); a missed
+  //                                   window is money gone, so it outranks tidiness
+  //   · the wait has EXPIRED        — re-submission is due now, not "later"
+  //   · COG missing                 — blocks the claim from even being valued
+  //   · money data missing          — reimb amount / payout date silently skew every £
+  //   · never categorised at all    — still sitting in her inbox
+  // Escalated → Jack's own strip. Everything else is parked and shown as a count,
+  // so nothing is invisible but nothing is nagged about twice either.
   const RISK_D = settings.deadline_risk_days||7, FLAG_D = settings.amazon_response_days||5;
-  let focusItems = [];
+  let focusItems = [], jackItems = [], parkedItems = [];
   active.forEach(r=>{
-    const a=ann(r.reimb_id); const d=daysLeft60(r.date);
+    const a=ann(r.reimb_id); const d=daysLeft60(r.date); const net=computedNet(r);
+    if (a.workflow_status==='escalated'){ jackItems.push(r); return; }
     if (!r.actual_cost||Number(r.actual_cost)<=0){ focusItems.push({r,rank:1,tag:'Fix COG',reason:'COG missing — blocked',col:'var(--red)'}); return; }
-    if ((a.msc_status==='approved'||a.msc_status==='reduced')&&!vaCaseOpen(r)){ focusItems.push({r,rank:2,tag:'Open case',reason:'MSC approved — open the case',col:'#38bdf8'}); return; }
-    if (a.review_date&&a.review_date<=today){ focusItems.push({r,rank:1,tag:'Re-submit',reason:'MSC re-submission overdue',col:'var(--red)'}); return; }
-    if (d<=RISK_D&&d>0&&computedNet(r)<0){ focusItems.push({r,rank:1,tag:'Work now',reason:'Claim window closing — '+d+'d left',col:'var(--red)'}); return; }
-    if (vaCaseOpen(r)){const o=a.case_opened_date||(a.msc_attempts&&a.msc_attempts.length?a.msc_attempts[a.msc_attempts.length-1].date:null); if(o&&Math.round((todayMs-new Date(o).getTime())/86400000)>=FLAG_D){ focusItems.push({r,rank:2,tag:'Follow up',reason:'Case gone quiet — chase Amazon',col:'var(--amber)'}); } return; }
-    if (a.msc_status==='docs'){ focusItems.push({r,rank:2,tag:'Add docs',reason:'Amazon needs a document',col:'#38bdf8'}); return; }
-    if (computedNet(r)<-0.01&&(!a.msc_status||a.msc_status==='none')){ focusItems.push({r,rank:3,tag:'Check MSC',reason:'Loss not yet submitted',col:'var(--text3)'}); return; }
+    if (d<=RISK_D&&d>0&&net<0){ focusItems.push({r,rank:1,tag:'Work now',reason:'Claim window closing — '+d+'d left',col:'var(--red)'}); return; }
+    if (a.review_date&&a.review_date<=today){ focusItems.push({r,rank:1,tag:'Re-submit',reason:'MSC re-submission due',col:'var(--red)'}); return; }
+    // Reimb-pending is WAITING, not incomplete — the payout date is legitimately blank
+    // until Amazon actually pays. Flagging it drowned the list in 8 false "missing date"
+    // rows, so these park; only genuinely SETTLED records get chased for their data.
+    if (isReimbPending(r)){ parkedItems.push(r); return; }
+    if (net<-0.01 && (!a.msc_status||a.msc_status==='none') && !vaCaseOpen(r)){ focusItems.push({r,rank:3,tag:'Check MSC',reason:'Loss not yet submitted',col:'var(--text3)'}); return; }
+    parkedItems.push(r);
+  });
+  // Settled cases whose money data was never filled in. These live in History but
+  // quietly distort every £ total there, so they belong in front of Sarah too.
+  archived.forEach(r=>{
+    const a=ann(r.reimb_id);
+    if ((a.outcome||'')!=='reimbursed') return;
+    if (!a.reimb_date) focusItems.push({r,rank:2,tag:'Add date',reason:'Settled — payout date missing',col:'var(--amber)'});
+    else if (a.final_reimb_amount==null||a.final_reimb_amount==='') focusItems.push({r,rank:2,tag:'Add £',reason:'Settled — final amount missing',col:'var(--amber)'});
   });
   focusItems.sort((a,b)=> a.rank-b.rank || computedNet(a.r)-computedNet(b.r));
   const urgentActive = focusItems.length;
   const actionTotal = urgentActive + errCount;
+  // Parked = categorised and correctly waiting. Surfaced as one line so Jack can
+  // still see how much is in flight without it reading as a to-do list.
+  const parkedNext = parkedItems.map(r=>ann(r.reimb_id).review_date).filter(Boolean).sort()[0]||null;
+  const parkedRisk = parkedItems.reduce((s,r)=>s+Math.abs(Math.min(0,computedNet(r))),0);
 
   // History recovery
   const workedArch = archived.filter(r=>{const st=histItemState(r);return st==='completed'||st==='dead';});
@@ -3644,6 +3785,24 @@ function renderOverview() {
         ${focusRows ? '<div class="ov2-taskgrid">'+focusRows+'</div>' : '<div class="ov2-allclear">Nothing urgent right now.'+(reviewItems.length?' Work the '+reviewItems.length+'-item review queue when you can.':' You\'re all caught up.')+'</div>'}
         ${focusItems.length>16?'<div class="ov2-focus-note" onclick="document.getElementById(\'aq-anchor\').scrollIntoView({behavior:\'smooth\'})">+ '+(focusItems.length-16)+' more in the action queue below ↓</div>':''}
         ${errCount?`<div class="ov2-focus-note" onclick="nav('errors')">⚠ ${errCount} import error${errCount===1?'':'s'} blocked out of the workflow — fix COG to bring them in →</div>`:''}
+        ${(parkedItems.length||jackItems.length)?`<div class="ov2-parked">
+          ${parkedItems.length?`<button class="ov2-parked-chip" onclick="nav('active')" title="Processed and correctly waiting — not your to-do today">⏸ <b>${parkedItems.length}</b> in process${parkedNext?' · next re-check '+fmtDate(parkedNext):''}${parkedRisk>0.005?' · '+money(-parkedRisk)+' in flight':''}</button>`:''}
+          ${jackItems.length?`<button class="ov2-parked-chip jack" onclick="nav('active');setActiveTag('escalated')" title="Escalated — waiting on Jack, not on you">👤 <b>${jackItems.length}</b> with Jack</button>`:''}
+        </div>`:''}
+        ${(()=>{ // fill the panel: where every live case actually sits, click to work it
+          const S=(k,f)=>{const it=active.filter(f);return {k,n:it.length,risk:it.reduce((s,r)=>s+Math.abs(Math.min(0,computedNet(r))),0)};};
+          const mS=r=>(ann(r.reimb_id).msc_status||'none'), wS=r=>(ann(r.reimb_id).workflow_status||'active');
+          const rp=r=>isReimbPending(r), es=r=>!rp(r)&&wS(r)==='escalated', co=r=>!rp(r)&&wS(r)!=='escalated'&&vaCaseOpen(r);
+          const at=r=>!rp(r)&&wS(r)!=='escalated'&&!vaCaseOpen(r);
+          const cells=[['MSC under review','#7dd3fc',r=>at(r)&&mS(r)==='review','review'],['MSC submitted','#38bdf8',r=>at(r)&&mS(r)==='pending','submitted'],
+            ['Needs document','#f5a623',r=>at(r)&&mS(r)==='docs','docs'],['MSC approved','#20c997',r=>at(r)&&mS(r)==='approved','approved'],
+            ['Reduced MSC','#f5a623',r=>at(r)&&mS(r)==='reduced','reduced'],['MSC denied','#f5414f',r=>at(r)&&(mS(r)==='denied'||mS(r)==='error'),'denied'],
+            ['Case / Claim','#c084fc',co,'caseopen'],['Reimb pending','#22d3ee',rp,'reimbpending'],['With Jack','#c084fc',es,'escalated']]
+            .map(([l,c,f,k])=>({l,c,...S(k,f)})).filter(x=>x.n>0);
+          if(!cells.length) return '';
+          return `<div class="ov2-pipe"><div class="ov2-pipe-h">Where the ${cells.reduce((s,c)=>s+c.n,0)} live cases sit <span>click to work a status</span></div>
+            <div class="ov2-pipe-g">${cells.map(c=>`<button class="ov2-pipe-t" style="--c:${c.c}" onclick="nav('active');setActiveTag('${c.k}')"><span class="pt-n">${c.n}</span><span class="pt-l">${c.l}</span><span class="pt-r">${c.risk>0.005?'-£'+c.risk.toFixed(2):'—'}</span></button>`).join('')}</div></div>`;
+        })()}
       </div>
       <div class="ov2-side">
         <div class="ov2-side-stats">
@@ -4635,34 +4794,54 @@ function renderActive() {
   const mscOf = r => (ann(r.reimb_id).msc_status||'none');
   const wfOf  = r => (ann(r.reimb_id).workflow_status||'active');
   const caseOpenOf = r => !!(ann(r.reimb_id).new_case_id) || wfOf(r)==='case_open';
+  // Tabs are MUTUALLY EXCLUSIVE, resolved by stage precedence (most-advanced wins):
+  // Reimb pending → Escalated → Case/Claim → MSC-result buckets. Without this a
+  // case that's reduced-MSC AND moved to Reimb pending showed under BOTH tabs
+  // (Sarah: Sensodyne/L'Oréal stuck under "Reduced MSC approved").
+  const isRP   = r => isReimbPending(r);                                  // waiting on the money
+  const isEsc  = r => !isRP(r) && wfOf(r)==='escalated';                  // handed to Jack
+  const isCase = r => !isRP(r) && wfOf(r)!=='escalated' && caseOpenOf(r); // case open with Amazon
+  const atMsc  = r => !isRP(r) && wfOf(r)!=='escalated' && !caseOpenOf(r);// still at the MSC-result stage
   const tagPred = {
-    // "All" = the Active inbox: everything still needing action. Reimb-pending
-    // cases have peeled off to their own tab and are NOT part of the inbox.
-    // "All" = the inbox: ONLY unprocessed cases. Any status set (denied, approved,
-    // under review, docs, case open, reimb pending, escalated) moves the case out
-    // of All into its status tab — Sarah's inbox-to-zero workflow.
+    // "All" = the Active inbox: ONLY unprocessed cases (any status set moves it out).
     all: r=>inActiveInbox(r),
-    overdue: r=>{ const rd=ann(r.reimb_id).review_date; return rd && rd<todayStr && ['pending','review','reduced','denied'].includes(mscOf(r)); },
-    submitted: r=>mscOf(r)==='pending',
-    review: r=>mscOf(r)==='review',
-    docs: r=>mscOf(r)==='docs',
-    approved: r=>mscOf(r)==='approved' && !caseOpenOf(r),
-    reduced: r=>mscOf(r)==='reduced',
-    denied: r=>mscOf(r)==='denied',
-    // A record with a new reimb ID has been PAID — it lives in Reimb Pending, not Case / Claim.
-    caseopen: r=>caseOpenOf(r) && wfOf(r)!=='reimb_pending' && !String(ann(r.reimb_id).new_reimb_id||'').trim(),
-    reimbpending: r=>wfOf(r)==='reimb_pending' || !!String(ann(r.reimb_id).new_reimb_id||'').trim(),
-    escalated: r=>wfOf(r)==='escalated',
+    overdue: r=>{ const rd=ann(r.reimb_id).review_date; return rd && rd<todayStr && ['pending','review','reduced','denied','error'].includes(mscOf(r)) && atMsc(r); },
+    submitted: r=>mscOf(r)==='pending' && atMsc(r),
+    review: r=>mscOf(r)==='review' && atMsc(r),
+    docs: r=>mscOf(r)==='docs' && atMsc(r),
+    approved: r=>mscOf(r)==='approved' && atMsc(r),
+    reduced: r=>mscOf(r)==='reduced' && atMsc(r),
+    denied: r=>(mscOf(r)==='denied'||mscOf(r)==='error') && atMsc(r),
+    caseopen: isCase,
+    reimbpending: isRP,
+    escalated: isEsc,
   };
-  const AR_TAGS = [['all','All'],['overdue','Overdue re-updates'],['submitted','MSC submitted'],['review','MSC under review'],['docs','Needs document'],['approved','MSC approved'],['reduced','Reduced MSC approved'],['denied','MSC denied'],['caseopen','Case / Claim'],['reimbpending','Reimbursement pending'],['escalated','Escalated to Jack']];
+  // Tabs kept in the SAME pipeline order (Sarah's muscle memory) but split into 3
+  // visual groups with soft dividers: the inbox · the MSC re-eval work · waiting on Amazon.
+  const TAG_GROUPS = [
+    [['all','All']],
+    [['overdue','Overdue re-updates'],['submitted','MSC submitted'],['review','MSC under review'],['docs','Needs document'],['approved','MSC approved'],['reduced','Reduced MSC approved'],['denied','MSC denied']],
+    [['caseopen','Case / Claim'],['reimbpending','Reimbursement pending'],['escalated','Escalated to Jack']],
+  ];
+  // Dot colour matches each card's coloured left-accent so the bar reads by colour.
+  const TAG_COL = {all:'#8aa0b6',overdue:'#f5414f',submitted:'#38bdf8',review:'#7dd3fc',docs:'#f5a623',approved:'#20c997',reduced:'#f5a623',denied:'#f5414f',caseopen:'#c084fc',reimbpending:'#22d3ee',escalated:'#c084fc'};
   const tagEl = document.getElementById('active-tags');
   if (tagEl) {
+    // While a search is running the tabs do NOT filter (a processed FNSKU must still be
+    // findable). Sarah read that as "the case is filed under every tag at once", so the
+    // bar now visibly stands down: no active highlight, dimmed, with a note saying why.
+    tagEl.classList.toggle('searching', !!srch);
     // Counts from the GLOBAL working set (base), never the filtered list — so
     // "All 46" always equals the sidebar's Active 46, no matter what's searched.
-    tagEl.innerHTML = AR_TAGS.map(([k,label])=>{
+    tagEl.innerHTML = TAG_GROUPS.map(group => group.map(([k,label])=>{
       const n = base.filter(tagPred[k]).length;
-      return `<button class="ar-tag ${activeTag===k?'on':''}" onclick="setActiveTag('${k}')">${label}<span class="ar-tag-n">${n}</span></button>`;
-    }).join('');
+      const on = activeTag===k && !srch;
+      return `<button class="ar-tag ${on?'on':''} ${(n===0&&!on)?'zero':''}" onclick="setActiveTag('${k}')"><span class="ar-tag-dot" style="background:${TAG_COL[k]||'#8aa0b6'}"></span>${label}<span class="ar-tag-n">${n}</span></button>`;
+    }).join('')).join('<span class="ar-tag-sep" aria-hidden="true"></span>');
+    // "All 0" read as an empty pipeline. This says how much is actually on the radar.
+    if (!srch){ const _tr=base.reduce((s,r)=>s+Math.abs(Math.min(0,computedNet(r))),0);
+      tagEl.insertAdjacentHTML('beforeend','<span class="ar-tag-total" title="Every live case, whatever status it sits in"><b>'+base.length+'</b> in process<i>-£'+_tr.toFixed(2)+' at risk</i></span>'); }
+    if (srch) tagEl.insertAdjacentHTML('beforeend','<div class="ar-tag-searchnote">🔍 Searching <b>every</b> status — tags are paused. Each result shows the one tag it actually lives under. <button onclick="clearSrch()">Clear search</button></div>');
   }
   // A search hunts ACROSS every status — if Sarah searches an FNSKU that's already
   // been processed, it must still be found (with its card showing its status),
@@ -4737,15 +4916,46 @@ function renderActive() {
     return sortDir==='asc'?(av>bv?1:-1):(av<bv?1:-1);
   });
 
+  // Preserve Sarah's scroll position across the wholesale innerHTML swap so acting on a
+  // card (status, MSC, docs…) never bounces her back to the top. Capture BOTH the list
+  // container AND the window — some zoom levels / screen widths scroll the page itself,
+  // not the inner container — and restore synchronously plus on the next frame (after layout).
   const _aw = document.querySelector('#page-active .tbl-wrap');
   const _ast = _aw ? _aw.scrollTop : 0;
+  const _winY = window.scrollY || document.documentElement.scrollTop || 0;
+  // An empty inbox used to leave most of the page blank. Instead of a lone tick, show
+  // where every live case actually sits — this doubles as the "how many are in each
+  // status overall" answer and turns the dead space into the pipeline at a glance.
+  const _boardCells = [
+    ['overdue','Overdue re-updates','#f5414f'],['submitted','MSC submitted','#38bdf8'],
+    ['review','MSC under review','#7dd3fc'],['docs','Needs document','#f5a623'],
+    ['approved','MSC approved','#20c997'],['reduced','Reduced MSC approved','#f5a623'],
+    ['denied','MSC denied','#f5414f'],['caseopen','Case / Claim','#c084fc'],
+    ['reimbpending','Reimbursement pending','#22d3ee'],['escalated','Escalated to Jack','#c084fc'],
+  ].map(([k,label,col])=>{
+    const items = base.filter(tagPred[k]);
+    return {k,label,col,n:items.length,risk:items.reduce((s,r)=>s+Math.abs(Math.min(0,computedNet(r))),0)};
+  });
+  const _boardTotal = _boardCells.reduce((s,c)=>s+c.n,0);
+  const _boardRisk  = _boardCells.reduce((s,c)=>s+c.risk,0);
+  const _boardHtml =
+    '<div class="ib-board"><div class="ib-head"><span class="ib-tick">✓</span>'
+    + '<div><div class="ib-title">Inbox clear — nothing new to process</div>'
+    + '<div class="ib-sub">Everything you\'ve already triaged is below, by status — <b>'+_boardTotal+'</b> case'+(_boardTotal===1?'':'s')+' still in play, <b>-£'+_boardRisk.toFixed(2)+'</b> at risk. Click any status to work it.</div></div></div>'
+    + '<div class="ib-grid">'+_boardCells.map(c=>
+        '<button class="ib-tile'+(c.n===0?' zero':'')+'" style="--c:'+c.col+'" onclick="setActiveTag(\''+c.k+'\')">'
+        + '<span class="ib-n">'+c.n+'</span><span class="ib-l">'+c.label+'</span>'
+        + '<span class="ib-r">'+(c.risk>0.005?'-£'+c.risk.toFixed(2):'—')+'</span></button>').join('')
+    + '</div></div>';
   const _emptyMsg = (activeTag==='all' && !srch && !fMonth && !fReason && !fMsc && !fLoss)
-    ? '<div style="text-align:center;padding:48px"><div style="font-size:16px;font-weight:800;color:var(--green)">✓ Inbox clear — 0 to process</div><div style="font-size:12px;color:var(--text3);margin-top:8px">Every case has been processed and moved to its status tab above.<br>Check the tabs (or the Overview) for what\'s waiting on Amazon.</div></div>'
+    ? _boardHtml
     : '<div style="text-align:center;padding:48px;color:var(--text3)">No active reimbursements match these filters.</div>';
   document.getElementById('tbl-active').innerHTML = rows.length
     ? rows.map(r => buildActiveCard(r)).join('')
     : _emptyMsg;
-  if (_aw) requestAnimationFrame(()=>{ _aw.scrollTop = _ast; });
+  const _restoreScroll = ()=>{ if (_aw) _aw.scrollTop = _ast; if (_winY) window.scrollTo(0, _winY); };
+  _restoreScroll();
+  requestAnimationFrame(_restoreScroll);
 }
 
 // Inline field edit from a card. kind 'rec' writes to the record, 'ann' writes to the annotation.
@@ -5006,14 +5216,19 @@ function buildActiveCard(r){
     '<button class="btn btn-sec ar-btn" onclick="event.stopPropagation();openRecord(\''+idJs+'\')">Details</button>'+
     '<button class="ar-review-btn" onclick="event.stopPropagation();sendBackToReview(\''+idJs+'\')">← Review queue</button>'+
     '<button class="btn btn-green ar-btn" onclick="event.stopPropagation();promptReimbursed(\''+idJs+'\')">✓ Reimbursed</button>'+
+    // One click straight to History with a required reason — was buried inside
+    // Details, which meant a dead case sat in Active because filing it was a chore.
+    '<button class="btn btn-danger ar-btn" onclick="event.stopPropagation();promptKill(\''+idJs+'\')" title="We tried and lost — file it in History with a reason">Take the loss →</button>'+
     '<input class="ar-inp ar-note-inp" type="text" value="'+esc(a.notes||'')+'" placeholder="quick note…" onclick="event.stopPropagation()" onchange="arSet(\''+idJs+'\',\'notes\',this.value,\'ann\')">'+
     '<a class="ar-link" href="'+MSC_PORTAL_URL+'" target="_blank" onclick="event.stopPropagation()">MSC Portal ↗</a>'+
     (a.new_case_id?'<a class="ar-link" href="'+caseUrl(a.new_case_id)+'" target="_blank" onclick="event.stopPropagation()">Case ↗</a>':'')+
   '</div></div>';
 
-  const curStat = isReimb?'reimbursed':(isPend?'reimbpending':(hasCase?'caseopen':(mscS==='none'?'needs':mscS)));
+  // Escalated sits between reimb-pending and case-open, matching the tab precedence,
+  // so an escalated card actually READS "Escalated to Jack" in its dropdown.
+  const curStat = isReimb?'reimbursed':(isPend?'reimbpending':(a.workflow_status==='escalated'?'escalated':(hasCase?'caseopen':(mscS==='none'?'needs':mscS))));
   const statusSel='<select class="ar-statsel" onclick="event.stopPropagation()" onchange="arStatus(\''+idJs+'\',this.value)">'+
-    [['needs','Needs MSC'],['review','MSC submitted'],['denied','MSC denied'],['approved','MSC approved'],['reduced','MSC reduced'],['docs','Needs doc'],['caseopen','Case / Claim'],['reimbpending','Reimb pending'],['reimbursed','Reimbursed'],['reversal','Reimb reversal']]
+    [['needs','Needs MSC'],['review','MSC submitted'],['denied','MSC denied'],['approved','MSC approved'],['reduced','MSC reduced'],['docs','Needs doc'],['caseopen','Case / Claim'],['reimbpending','Reimb pending'],['escalated','Escalated to Jack'],['reimbursed','Reimbursed'],['reversal','Reimb reversal'],['losstaken','Loss taken → History']]
     .map(o=>'<option value="'+o[0]+'"'+(curStat===o[0]?' selected':'')+'>'+o[1]+'</option>').join('')+'</select>';
   const open = arOpen[id]!==false;   // workshop card open by default; bar is the opt-in compact view
   // compact one-line summary bar (collapsed state)
@@ -5027,7 +5242,7 @@ function buildActiveCard(r){
     '<span class="ar-b-acts">'+barQuick+(cta?'<button class="ar-b-cta" style="--rc:'+ctaCol+'" onclick="event.stopPropagation();'+ctaAct+'">'+cta+'</button>':'')+'</span>'+
   '</div>';
   return '<div class="ar-card '+rowStatusClass(r)+(open?' is-open':'')+'" data-rid="'+esc(id)+'">'+
-    '<div class="ar-zhead" onclick="arHeadClick(event,\''+idJs+'\')"><div class="ar-head"><div class="ar-name">'+esc(r.product_name||'(no product name)')+'</div>'+
+    '<div class="ar-zhead" onclick="arHeadClick(event,\''+idJs+'\')"><div class="ar-head"><div class="ar-name" title="'+esc(r.product_name||'')+'">'+esc(r.product_name||'(no product name)')+'</div>'+
       '<div class="ar-chips">'+asinChip(r.asin)+idChip(r.fnsku,'FNSKU')+idChip(r.sku,'SKU')+reimbChip(reimbDisplay)+'</div></div>'+
       '<div class="ar-tags">'+reasonPill(r.reason)+statusSel+'<div class="ar-sa">'+statusActionCell(r)+'</div></div>'+
       '<button class="ar-expand" onclick="event.stopPropagation();arToggle(\''+idJs+'\')" title="'+(open?'Collapse':'Expand details')+'">'+(open?'▾':'▸')+'</button></div>'+
@@ -5057,6 +5272,7 @@ function setActiveSort(col){
 }
 function arStatus(id, val){
   if (val==='reimbursed'){ promptReimbursed(id); return; }
+  if (val==='losstaken'){ promptKill(id); return; }   // asks for the reason, then files to History
   if (val==='reversal'){
     // Amazon clawed the payment back on a worked case → file to History as a
     // reversal (undo available via the toast). Sign-flip handled in metrics.
@@ -5071,12 +5287,16 @@ function arStatus(id, val){
     // workflow_status case_open is what vaCaseOpen() reads — without it the card
     // would land under "MSC approved" instead of the Case / Claim tab.
     setAnn(id,{msc_status:'approved', case_status:'open', workflow_status:'case_open', case_opened_date:a.case_opened_date||new Date().toISOString().split('T')[0]});
+  } else if (val==='escalated'){
+    // Hand it to Jack. Was only reachable from a nested select inside Details —
+    // Sarah asked for it on the card dropdown where every other status already lives.
+    setAnn(id,{workflow_status:'escalated'});
   } else {
     setAnn(id,{msc_status: val==='needs'?'none':val});
   }
   renderActive(); renderActions(); updateBadges();
   // The card leaves the "All" inbox on any status — tell Sarah where it went.
-  const TAB_LABEL = {needs:'back in the Active inbox', review:'MSC submitted', denied:'MSC denied', approved:'MSC approved', reduced:'Reduced MSC approved', docs:'Needs document', caseopen:'Case / Claim', reimbpending:'Reimbursement pending'};
+  const TAB_LABEL = {needs:'back in the Active inbox', review:'MSC submitted', denied:'MSC denied', approved:'MSC approved', reduced:'Reduced MSC approved', docs:'Needs document', caseopen:'Case / Claim', reimbpending:'Reimbursement pending', escalated:'Escalated to Jack'};
   if (TAB_LABEL[val]) toast(val==='needs' ? 'Moved '+TAB_LABEL[val] : 'Processed — now under “'+TAB_LABEL[val]+'”');
 }
 
@@ -5546,7 +5766,14 @@ function renderHistory() {
     if(st==='completed') return mt.recovered>0.005
       ? {txt:'worked win', cls:'profit', tip:'Worked case: recovered more than Amazon first paid.'}
       : {txt:'worked closed', cls:'manual', tip:'Worked case closed without extra recovery.'};
-    if(st==='dead') return {txt:'written off', cls:'rev', tip:'Worked case was chased but written off.'};
+    if(st==='dead'){
+      // Sarah is made to give a reason when she takes the loss — show it, otherwise
+      // she fills in a box that goes nowhere and History can't explain its own losses.
+      const _a=ann(r.reimb_id), _dr=(_a.dead_reason||'').trim(), _dn=(_a.dead_note||'').trim();
+      const SHORT={'Amazon refused — attempts exceeded':'refused','Amazon already paid at or above MSC':'paid in full','Ran out of 60-day window':'window shut','MSC permanently denied':'MSC denied','Not worth chasing':'not chased'};
+      return {txt:_dr?(SHORT[_dr]||'written off'):'written off', cls:'rev',
+              tip:_dr?('Loss taken — '+_dr+(_dn?' · '+_dn:'')):'Worked case was chased but written off. No reason was recorded.'};
+    }
     return {txt:'settled', cls:'manual', tip:'Settled history row.'};
   };
   const rowHtml = r => {
@@ -7444,7 +7671,9 @@ function saveRecord(reimb_id) {
   toast('Saved ✓');
 }
 
-let KILL_REASONS = ['Ran out of 60-day window','MSC permanently denied','Not worth chasing','Other'];
+// Reasons Sarah actually hits. "Amazon refused" and "already paid at/above MSC" were
+// missing, which is the exact Samsung case: we pushed for more, Amazon said no.
+let KILL_REASONS = ['Amazon refused — attempts exceeded','Amazon already paid at or above MSC','Ran out of 60-day window','MSC permanently denied','Not worth chasing','Other'];
 function promptKill(reimb_id){
   const r = records.find(x=>x.reimb_id===reimb_id);
   if (r && (!r.actual_cost || Number(r.actual_cost)<=0)) { toast('Enter a COG before taking the loss'); return; }
@@ -8680,7 +8909,7 @@ function updateLastBackup(){
 
 // ── Build stamp: bump on every ship. Visible in the sidebar so anyone can tell
 // at a glance whether the live site / their browser is running the latest file.
-const APP_BUILD = 'v15.8 · history-redesign';
+const APP_BUILD = 'v16.5 · fill-focus';
 (function(){ const b=document.getElementById('build-tag'); if(b) b.textContent=APP_BUILD; document.title='SF Reimbursements · '+APP_BUILD; console.log('SF Reimbursements build', APP_BUILD); })();
 // "/" anywhere on the Active page jumps to the search box (ignored while typing).
 document.addEventListener('keydown', e=>{
